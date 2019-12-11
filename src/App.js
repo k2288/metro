@@ -21,30 +21,32 @@ class App extends Component {
   }
 
   checkAuth=()=>{
-    const sessionId=sessionStorage.getItem('JSESSIONID');
-    if(sessionId){
-      axios.defaults.headers.common['JSESSIONID'] =sessionId;
-      axios.get("api/users/principle")
-      .then(response=>{
-        console.log(response);
-      })
-      .catch(error=>{
-        console.log(error);
-      })
-    }else{
+    axios.get("api/users/principle")
+    .then(response=>{
       this.setState({
+        isAuthenticated:true,
         authenticationIsChecked:true
       })
-    }
+    })
+    .catch(error=>{
+      if(error.response.data.statusCode===401){
+        this.setState({
+          isAuthenticated:false,
+          authenticationIsChecked:true
+        })
+      }
+    })
+    
 
   }
 
   render() {
     let routes=(
       <Switch>
-        <Route path="/login" exact component={SignIn} />
-        <Redirect to="/login" />
+        <Route path="/signin" exact component={SignIn} />
+        <Redirect to="/signin" />
       </Switch>
+
     )
 
     if(!this.state.authenticationIsChecked){

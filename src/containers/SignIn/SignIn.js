@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./SignIn.css";
 import axios from "../../Axios-Hami";
-
+import { translate } from "../../utils/translate"
 
 class SignIn extends Component{
     state={
@@ -10,36 +10,37 @@ class SignIn extends Component{
         }
 
     
-    inputChangeHandler=(event,input)=>{
-        switch (input){
-            case "USERNAME":
-                this.setState({username:event.target.value});
-                break;
-            case "PASSWORD":
-                this.setState({password:event.target.value});
-                break;
-        }
+    // inputChangeHandler=(event,input)=>{
+    //     switch (input){
+    //         case "USERNAME":
+    //             this.setState({username:event.target.value});
+    //             break;
+    //         case "PASSWORD":
+    //             this.setState({password:event.target.value});
+    //             break;
+    //     }
 
-    }
+    // }
 
     submitHandler=()=>{
         event.preventDefault();
         const data = new FormData(event.target);
         if(this.state.username && this.state.password){
-            // axios({
-            //     method: 'post',
-            //     url: '/login',
-            //     data: data
-            //     })
-            //     .then(function (response) {
-            //         //handle success
-            //         console.log(response);
-            //     })
-            //     .catch(function (response) {
-            //         //handle error
-            //         console.log(response);
-            //     });
-            axios.post("/login?username=admin&password=admin",data)
+            axios({
+                method: 'post',
+                url: 'login',
+                data: data
+                })
+                .then(function (response) {
+                    //handle success
+                    console.log(response);
+                })
+                .catch(function (response) {
+                    //handle error
+                    console.log(response);
+                });
+            axios.post("/login",data, {
+                headers: { 'Content-Type': 'multipart/form-data' }})
             .then(response=>{
                 console.log(response);
             })
@@ -47,6 +48,21 @@ class SignIn extends Component{
                 console.log(error);
             })
         }
+    }
+
+    keyPressHandler=(event)=>{
+        let word= translate(event.keyCode);
+        if(word){
+            this.setState({
+                username:this.state.username+word
+            })
+        }else{
+            this.setState({
+                username:event.target.value
+            })
+        }
+
+        
     }
 
     render(){
@@ -57,10 +73,10 @@ class SignIn extends Component{
                     <h2 className="text-light">Login to service</h2>
                     <hr className="thin mt-4 mb-4 bg-white" />
                     <div className="form-group">
-                        <input onChange={(event)=>this.inputChangeHandler(event,"USERNAME")} type="text" name="username"  placeholder="Enter your username..."  />
+                        <input onKeyDown={this.keyPressHandler}  type="text" value={this.state.username} name="username"  placeholder="Enter your username..."  />
                     </div>
                     <div className="form-group">
-                        <input onChange={(event)=>this.inputChangeHandler(event,"PASSWORD")} type="password" name="password" placeholder="Enter your password..."  />
+                        <input type="password" name="password" placeholder="Enter your password..."  />
                     </div>
                     <div className="form-group mt-10">
                         <button className="button">Submit form</button>
