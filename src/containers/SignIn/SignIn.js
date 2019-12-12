@@ -1,26 +1,27 @@
 import React, { Component } from "react";
 import "./SignIn.css";
 import axios from "../../Axios-Hami";
-import { translate } from "../../utils/translate"
+import { translate, translateToEnglish } from "../../utils/translate"
 
 class SignIn extends Component{
     state={
             username:"",
+            englishUsername:"",
             password:""
         }
 
     
-    // inputChangeHandler=(event,input)=>{
-    //     switch (input){
-    //         case "USERNAME":
-    //             this.setState({username:event.target.value});
-    //             break;
-    //         case "PASSWORD":
-    //             this.setState({password:event.target.value});
-    //             break;
-    //     }
+    inputChangeHandler=(event,input)=>{
+        switch (input){
+            case "USERNAME":
+                this.setState({username:translateToEnglish(event.target.value)});
+                break;
+            case "PASSWORD":
+                this.setState({password:event.target.value});
+                break;
+        }
 
-    // }
+    }
 
     submitHandler=()=>{
         event.preventDefault();
@@ -51,18 +52,27 @@ class SignIn extends Component{
     }
 
     keyPressHandler=(event)=>{
-        let word= translate(event.keyCode);
+        // let word= translate(event.keyCode);
+        
+        console.log(event.target.value);
+        
+        let word=translate(String.fromCharCode(event.which),event);
         if(word){
             this.setState({
-                username:this.state.username+word
+                englishUsername:this.state.username+word.toLowerCase()
             })
-        }else{
-            this.setState({
-                username:event.target.value
-            })
+            console.log(event.which);
+            console.log(word.toLowerCase());
         }
-
-        
+        // if(word){
+        //     this.setState({
+        //         username:this.state.username+word
+        //     })
+        // }else{
+        //     this.setState({
+        //         username:event.target.value
+        //     })
+        // }  
     }
 
     render(){
@@ -73,7 +83,11 @@ class SignIn extends Component{
                     <h2 className="text-light">Login to service</h2>
                     <hr className="thin mt-4 mb-4 bg-white" />
                     <div className="form-group">
-                        <input onKeyDown={this.keyPressHandler}  type="text" value={this.state.username} name="username"  placeholder="Enter your username..."  />
+                        <input 
+                        // onKeyDown={(event)=>this.keyPressHandler(event)} 
+                        value={this.state.username}
+                        onChange={(event)=>this.inputChangeHandler(event,"USERNAME")} 
+                        type="text" name="username"  placeholder="Enter your username..."  />
                     </div>
                     <div className="form-group">
                         <input type="password" name="password" placeholder="Enter your password..."  />

@@ -29,12 +29,12 @@ class App extends Component {
       })
     })
     .catch(error=>{
-      if(error.response.data.statusCode===401){
+      // if(error.response.data.statusCode===401){
         this.setState({
           isAuthenticated:false,
           authenticationIsChecked:true
         })
-      }
+      // }
     })
     
 
