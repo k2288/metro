@@ -29,12 +29,10 @@ class App extends Component {
       })
     })
     .catch(error=>{
-      // if(error.response.data.statusCode===401){
         this.setState({
           isAuthenticated:false,
           authenticationIsChecked:true
         })
-      // }
     })
     
 
@@ -54,7 +52,7 @@ class App extends Component {
     }else if(this.state.isAuthenticated){
       routes=(
         <Switch>
-          <Route path="/" exactcComponent={Desktop} />
+          <Route path="/" exact exactcComponent={Desktop} />
           <Redirect to="/" />
         </Switch>
       )
