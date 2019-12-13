@@ -9,3 +9,9 @@ export {
     backToSignIn
 }
 from "./auth"
+
+export {
+    addWindow,
+    closeWindow
+}
+from "./desktop"

@@ -7,12 +7,14 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import global from "./store/reducers/global"
 import auth from "./store/reducers/auth"
+import desktop from "./store/reducers/desktop"
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer=combineReducers({
   auth: auth,
   global: global,
+  desktop: desktop
 });
 
 const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(

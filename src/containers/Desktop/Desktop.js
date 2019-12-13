@@ -1,15 +1,26 @@
 import React, { Component } from "react"
 import "./Desktop.css"
 import DropDown from "../../components/DropDown/DropDown";
+import Window from "../../components/Window/Window";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/index"
 
 class Desktop extends Component{
 
+
     render(){
+        console.log(this.props.windows)
         return (
             <div className="desktop">
                 <div className="window-area">
-
-                <div className="window resizable resizeable-element" id="window-157623205983199" data-role-draggable="true" data-role="resizeable" style={{position: "absolute", width: "393px", height: "212px", top: "265px", left: "144px", zIndex: "2", cursor: "auto"}} data-role-resizeable="true"><div className="window-caption"><span className="icon"><span className="mif-apps"></span></span><span className="title">apps</span><div className="buttons"><span className="button btn-max sys-button"></span><span className="button btn-min sys-button"></span><span className="button btn-close sys-button"></span></div></div><div className="window-content">New window content</div><span className="resize-element"></span></div>
+                    asdf
+                    {
+                        
+                        this.props.windows.map(win=>{
+                            return <Window key={win.id} win={win} />
+                        })
+                    }
+                    
 
                 </div>
                 <div className="task-bar">
@@ -18,7 +29,10 @@ class Desktop extends Component{
                                 <div className="explorer">
                                     <ul className="v-menu w-100 bg-brandColor2 fg-white">
                                         <li><a >Youtube window</a></li>
-                                        <li><a >New window</a></li>
+                                        <li><a onClick={()=>this.props.onAddWindow({
+                                            id:new Date(),
+                                            name:"new window"
+                                        })} >New window</a></li>
                                         <li><a >Custom buttons</a></li>
                                         <li><a >Modal window</a></li>
                                     </ul>
@@ -38,4 +52,16 @@ class Desktop extends Component{
     }
 }
 
-export default Desktop;
+const mapStateToProps=state=>{
+    return {
+        windows:state.desktop.windows
+    }
+}
+
+const mapDispatchToProps=dispach=>{
+    return {
+        onAddWindow:(win)=>dispach(actions.addWindow(win))
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Desktop);
