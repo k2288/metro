@@ -53,7 +53,8 @@ class App extends Component {
     }else if(this.props.isAuthenticated){
       routes=(
         <Switch>
-          <Route path="/" exact exactcComponent={Desktop} />
+          
+          <Route path="/"  exact component={Desktop} />
           <Redirect to="/" />
         </Switch>
       )
