@@ -1,0 +1,15 @@
+.starting-screen{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: black;
+}
+
+.starting-screen .mif-windows{
+    font-size: 8em;
+    color: #01cbff;
+}

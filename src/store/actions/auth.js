@@ -21,6 +21,12 @@ export const authFail=(err)=>{
     }
 };
 
+export const backToSignIn=()=>{
+    return {
+        type:actionTypes.BACK_TO_SIGN_IN,
+    }
+};
+
 export const auth=(data)=>{
     return dispatch=>{
         dispatch(authStart());
@@ -30,7 +36,8 @@ export const auth=(data)=>{
             dispatch(actions.authOk());
         })
         .catch(err=>{
-            dispatch(authFail(err));
+            console.log(err);
+            dispatch(authFail(err.response.data));
         })
     }
 }

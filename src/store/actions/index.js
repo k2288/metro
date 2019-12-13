@@ -5,6 +5,7 @@ export {
 } from "./global"
 
 export {
-    auth
+    auth,
+    backToSignIn
 }
 from "./auth"

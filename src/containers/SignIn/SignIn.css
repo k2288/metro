@@ -1,6 +1,22 @@
-.login-form {
-    width: 350px;
-    height: auto;
-    top: 50%;
-    margin-top: -160px;
+.signin-screen{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url("../../assets/images/Windows-10-lock-screen.jpg") center center no-repeat; ;
+    background-size: cover;
+    flex-direction: column;
+
+}
+
+.signin-screen .icon-container{
+    margin: 0 auto;
+    width: 140px;
+    height: 140px;
+    font-size: 110%;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
 }

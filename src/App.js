@@ -45,7 +45,11 @@ class App extends Component {
     )
 
     if(!this.props.authenticationIsChecked){
-      return ("loading");
+      return (
+        <div className="starting-screen">
+          <span className="mif-windows"></span>
+        </div>
+      )
     }else if(this.props.isAuthenticated){
       routes=(
         <Switch>

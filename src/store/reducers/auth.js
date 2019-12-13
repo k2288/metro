@@ -19,6 +19,12 @@ const reducer =(state=initialState ,action)=>{
                 loading:false,
                 error:action.error
             };
+        case actionType.BACK_TO_SIGN_IN:
+            return{
+                ...state,
+                loading:false,
+                error:null
+            };
 
         case actionType.AUTH_SUCCESS:
             return {

@@ -4,6 +4,7 @@ import axios from "../../Axios-Hami";
 import EnglishInput from "../../components/EnglishInput/EnglishInput";
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions/index.js"
+import RingIndicator from "../../components/RingIndicator/RingIndicator"
 
 
 class SignIn extends Component{
@@ -13,42 +14,65 @@ class SignIn extends Component{
         event.preventDefault();
         const data = new FormData(event.target);
         if(data){
-
             this.props.onAuth(data)
-
-            
         }
     }
 
 
 
     render(){
-        return (
-            <div className="h-vh-100 ">
-                <form onSubmit={this.submitHandler} className="login-form bg-white p-6 mx-auto border bd-default win-shadow ">
-                    <span className="mif- user mif-4x place-right" style={{marginTop: "-10px"}}></span>
-                    <h2 className="text-light">Login to service</h2>
-                    <hr className="thin mt-4 mb-4 bg-white" />
+
+        let loginForm=(
+            <div>
+                <div className="icon-container">
+                </div>
+                <form onSubmit={this.submitHandler} className="login-form  p-6 mx-auto  ">
                     <div className="form-group">
                         <EnglishInput
                             name="username"
                             type="text"
-                            placeholder="Enter your username"
-
+                            placeholder="Username"
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group" style={{display:"flex"}}>
                         <EnglishInput
                             name="password"
                             type="password"
-                            placeholder="Enter your password.."
+                            placeholder="Password"
 
                         />
-                    </div>
-                    <div className="form-group mt-10">
-                        <button className="button">Submit form</button>
+                        <div  >
+                            <button className="button">
+                                <span className="mif-arrow-right "></span>
+                            </button>
+                        </div>
                     </div>
                 </form>
+            </div>
+        );
+
+        if(this.props.error){
+            loginForm=(
+                <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+                    <p style={{color:"white",marginBottom:"20px",fontWeight:"bold"}}>{this.props.error.message}</p>
+                    <button className="button" style={{    width: "20%"}} onClick={this.props.onBackSignIn} > 
+                        ok
+                    </button>
+                </div>
+            )
+        }
+
+
+        return (
+            <div className="signin-screen">
+                {
+                    this.props.loading?
+                        <RingIndicator />
+                        :
+                    loginForm
+                }
+
+                
             </div>
         );
     }
@@ -64,6 +88,7 @@ const mapStateToProps=state=>{
 const mapDispatchToProps=dispatch=>{
     return {
       onAuth:(data)=>dispatch(actions.auth(data)),
+      onBackSignIn:()=>dispatch(actions.backToSignIn())
     }
 };
 
