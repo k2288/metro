@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter } from "react-router-dom"
-import { Route ,Switch , Redirect} from "react-router"
+import { BrowserRouter } from "react-router-dom";
+import { Route ,Switch , Redirect} from "react-router";
 import axios from "./Axios-Hami";
-import Desktop from "./containers/Desktop/Desktop"
-import SignIn from "./containers/SignIn/SignIn"
+import Desktop from "./containers/Desktop/Desktop";
+import SignIn from "./containers/SignIn/SignIn";
+import { connect } from "react-redux";
+import * as actions from "./store/actions/index"
 
 
 
 class App extends Component {
 
-  state={
-    authenticationIsChecked:false,
-    isAuthenticated:false
-
-  }
 
   componentDidMount=()=>{
-    this.checkAuth();
+    this.props.checkAuth();
   }
 
   checkAuth=()=>{
@@ -47,9 +44,9 @@ class App extends Component {
 
     )
 
-    if(!this.state.authenticationIsChecked){
+    if(!this.props.authenticationIsChecked){
       return ("loading");
-    }else if(this.state.isAuthenticated){
+    }else if(this.props.isAuthenticated){
       routes=(
         <Switch>
           <Route path="/" exact exactcComponent={Desktop} />
@@ -67,4 +64,18 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps=state=>{
+  return {
+    authenticationIsChecked:state.global.authenticationIsChecked,
+    isAuthenticated:state.global.isAuthenticated
+  }
+}
+
+const mapDispatchToProps=dispatch=>{
+  return {
+    checkAuth:()=>dispatch(actions.checkAuth())
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

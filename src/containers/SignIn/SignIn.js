@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import "./SignIn.css";
 import axios from "../../Axios-Hami";
 import EnglishInput from "../../components/EnglishInput/EnglishInput";
+import { connect } from 'react-redux';
+import * as actions from "../../store/actions/index.js"
+
 
 class SignIn extends Component{
 
@@ -10,16 +13,10 @@ class SignIn extends Component{
         event.preventDefault();
         const data = new FormData(event.target);
         if(data){
-            axios.post("/login",data)
-            .then(response=>{
-                console.log(response);
 
-                
-                console.log(this.props.history);
-            })
-            .catch(error=>{
-                console.log(error);
-            })
+            this.props.onAuth(data)
+
+            
         }
     }
 
@@ -57,4 +54,17 @@ class SignIn extends Component{
     }
 }
 
-export default SignIn;
+const mapStateToProps=state=>{
+    return {
+      loading:state.auth.loading,
+      error:state.auth.error,
+    }
+  };
+  
+const mapDispatchToProps=dispatch=>{
+    return {
+      onAuth:(data)=>dispatch(actions.auth(data)),
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)( SignIn);
