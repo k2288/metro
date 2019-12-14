@@ -3,7 +3,6 @@ import "./Metro.css";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import UserManagement from "../../components/UserManagement/UserManagement"
-import UniqueId from "../../utils/GenerateId"
 
 class Metro extends Component{
 
@@ -21,7 +20,17 @@ class Metro extends Component{
         return (
             <div className="bg-dark fg-white h-vh-100 ">
                 <div className="container-fluid start-screen h-100" style={{overflow: "auto"}}>
-                        <h1 className="start-screen-title">Start</h1>
+                        <div className="start-screen-title" style={{display:'flex',alignItems:"center",width:"inherit"}}>
+                            <h1 style={{width:"inherit"}} >Start</h1>
+                            <h3 >
+                                {this.props.user.username}
+                            </h3>
+                            <div onClick={this.props.onLogout} >
+                                <span className="mif-settings-power icon" style={{fontSize: "25px",marginLeft: "18px",cursor:"pointer"}}></span>
+                            </div>
+                            <div style={{width:"30%"}}></div>
+                        </div>
+                        
 
                         <div className="tiles-area clear" style={{marginTop: "-50px"}}> 
                         {/* style={{width: "1920px"}} */}
@@ -45,10 +54,17 @@ class Metro extends Component{
     }
 }
 
-const mapDispatchToProps=dispach=>{
+const mapStateToProps=state=>{
     return {
-        onAddWindow:(win)=>dispach(actions.addWindow(win))
+        user:state.global.user
     }
 }
 
-export default connect(null,mapDispatchToProps)( Metro);
+const mapDispatchToProps=dispach=>{
+    return {
+        onAddWindow:(win)=>dispach(actions.addWindow(win)),
+        onLogout:()=>dispach(actions.logout())
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)( Metro);

@@ -1,7 +1,8 @@
 export {
     checkAuth,
     authIsNotValid,
-    authOk
+    authOk,
+    logout
 } from "./global"
 
 export {

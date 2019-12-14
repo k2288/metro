@@ -33,7 +33,7 @@ export const auth=(data)=>{
         axios.post("/login",data)
         .then(resp=>{
             dispatch(authSuccess());
-            dispatch(actions.authOk());
+            dispatch(actions.authOk(resp.data));
         })
         .catch(err=>{
             console.log(err);

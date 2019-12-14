@@ -1,7 +1,8 @@
 import * as actionType from "../actions/actionTypes";
 const initialState={
     authenticationIsChecked:false,
-    isAuthenticated:false
+    isAuthenticated:false,
+    user:null
 };
 
 const reducer =(state=initialState ,action)=>{
@@ -10,7 +11,8 @@ const reducer =(state=initialState ,action)=>{
             return {
                 ...state,
                 authenticationIsChecked:true,
-                isAuthenticated:true
+                isAuthenticated:true,
+                user:action.user
             };
         case actionType.AUTH_NOT_VALID:
             return {

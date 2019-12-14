@@ -2,9 +2,10 @@ import * as actionTypes from "./actionTypes"
 import axios from '../../Axios-Hami';
 
 
-export const authOk=()=>{
+export const authOk=(user)=>{
     return {
-        type:actionTypes.AUTH_IS_OK
+        type:actionTypes.AUTH_IS_OK,
+        user:user
     }
 };
 
@@ -19,10 +20,23 @@ export const checkAuth=()=>{
     return dispatch=>{
         axios.get("api/users/principle")
         .then(response=>{
-            dispatch(authOk());
+            dispatch(authOk(response.data));
+
         })
         .catch(error=>{
             dispatch(authIsNotValid())
         })
+    }
+}
+
+export const logout=()=>{
+    return dispatch=>{
+        axios.get("/logout")
+            .then(resp=>{
+                dispatch(authIsNotValid());
+            })
+            .catch(err=>{
+                
+            })
     }
 }
