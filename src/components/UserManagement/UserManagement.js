@@ -36,7 +36,7 @@ class UserManagement extends Component {
 
 
     componentDidMount=()=>{
-        // this.props.onGetUsers(this.state.offset,this.state.pageSize);
+        this.props.onGetUsers(this.state.offset,this.state.pageSize);
 
         // axios.get(`/api/users/${this.state.offset}/${this.state.pageSize}`)
         //     .then(resp=>{
@@ -56,44 +56,39 @@ class UserManagement extends Component {
         }
 
         return (
-            <div>
-                <button className="button" onClick={this.createUser} >New User</button>
-                <table className="table">
-                    <thead>
-                    <tr>
-                        <th>نام</th>
-                        <th>ایمیل</th>
-                        <th>نام کاربری</th>
-                        <th>فعال/غیر فعال</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            this.props.result.contents.map(user=>{
-                                return (
-                                    
-                                    <tr key={user.uuid}>
-                                        <td>{user.firstName} {user.lastName}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.username}</td>
-                                        <td>
-                                            {
-                                               user.enable?
-                                               <span className="fg-green mif-checkmark"></span>
-                                               :
-                                               <span className="fg-red mif-minus js-archive-record"></span>
-                                            }
-                                        </td>
-                                        <td>
-                                            <button className="button" onClick={()=>this.editUser(user)} >Edit</button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+            <div className="row">
+                <div className="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>نام</th>
+                                <th>ایمیل</th>
+                                <th class="text-right">نام کاربری</th>
+                                <th class="text-right">وضعیت</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                this.props.result.contents.map(user=>{
+                                    return (
+                                        <tr key={user.uuid}>
+                                            <td> {user.firstName} {user.lastName}</td>
+                                            <td>{user.email}</td>
+                                            <td class="text-right">{user.username}</td>
+                                            <td class="text-right">{
+                                                user.enable?<span class="mif-blocked"></span>:
+                                                <span class="mif-checkmark"></span>
+                                            }</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            </tbody>
+                        </table>
+                        </div>
+                </div>
+
             </div>
         );
     }

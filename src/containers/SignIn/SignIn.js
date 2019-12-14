@@ -24,7 +24,8 @@ class SignIn extends Component{
 
         let loginForm=(
             <div>
-                <div className="icon-container">
+                <div className="icon-container" style={{marginBottom:"20px"}}>
+                <span class="glyph glyph-contact"></span>
                 </div>
                 <form onSubmit={this.submitHandler} className="login-form  p-6 mx-auto  ">
                     <div className="form-group">
@@ -34,7 +35,7 @@ class SignIn extends Component{
                             placeholder="Username"
                         />
                     </div>
-                    <div className="form-group" style={{display:"flex"}}>
+                    <div className="form-group" style={{display:"flex",alignItems:"center"}}>
                         <EnglishInput
                             name="password"
                             type="password"
@@ -42,7 +43,8 @@ class SignIn extends Component{
 
                         />
                         <div  >
-                            <button className="button">
+                            <button style={{margin:"0",minWidth:"20px",maxHeight:"35px"}}
+                             className="btn btn-block btn-primary">
                                 <span className="mif-arrow-right "></span>
                             </button>
                         </div>
@@ -67,7 +69,14 @@ class SignIn extends Component{
             <div className="signin-screen">
                 {
                     this.props.loading?
-                        <RingIndicator />
+                    <div class="progress-ring progress-large">
+      <div class="progress-circle"></div>
+      <div class="progress-circle"></div>
+      <div class="progress-circle"></div>
+      <div class="progress-circle"></div>
+      <div class="progress-circle"></div>
+    </div>
+                        // <RingIndicator />
                         :
                     loginForm
                 }

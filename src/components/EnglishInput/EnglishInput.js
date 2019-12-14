@@ -32,6 +32,8 @@ class EnglishInput extends Component{
     render(){
         return (
             <input 
+            className="form-control"
+            style={{marginBottom:"0"}}
                 value={this.state.value}
                 onKeyDown={(event)=>this.keyPressHandler(event)} 
                 onChange={(event)=>this.inputChangeHandler(event)} 
