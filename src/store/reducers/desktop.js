@@ -12,6 +12,8 @@ const reducer=(state=initialState,action)=>{
             let newWindows=[...state.windows]
             action.win.uniqueId=UniqueId();
             action.win.zIndex=state.lastZIndex+1;
+            action.win.minimize=false;
+            action.win.maximize=false;
             newWindows.push(action.win)
             return {
                 ...state,
@@ -53,6 +55,31 @@ const reducer=(state=initialState,action)=>{
                 ...state,
                 windows:newWindows,
                 lastZIndex:state.lastZIndex+1
+            }
+        case actionTypes.MINIMIZE:
+            windowIndex=state.windows.findIndex(win=>{
+                return win.uniqueId===action.uniqueId
+            });
+            newWindows=[...state.windows]
+            
+            newWindows[windowIndex].minimize=!newWindows[windowIndex].minimize
+            newWindows[windowIndex].zIndex=state.lastZIndex+1
+            return {
+                ...state,
+                windows:newWindows,
+                lastZIndex:state.lastZIndex+1
+            }
+        case actionTypes.MAXIMIZE:
+            windowIndex=state.windows.findIndex(win=>{
+                return win.uniqueId===action.uniqueId
+            });
+            newWindows=[...state.windows]
+            
+            newWindows[windowIndex].maximize=!newWindows[windowIndex].maximize
+            console.log(newWindows[windowIndex].minimize)
+            return {
+                ...state,
+                windows:newWindows,
             }
             
         default :

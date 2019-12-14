@@ -14,7 +14,9 @@ export {
     addWindow,
     closeWindow,
     setPosition,
-    setActive
+    setActive,
+    minimize,
+    maximize
 }
 from "./desktop"
 

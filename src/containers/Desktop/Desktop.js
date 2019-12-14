@@ -17,7 +17,6 @@ class Desktop extends Component{
             <div className="desktop">
                 <div className="window-area">
                     {
-                        
                         this.props.windows.map(win=>{
                             return <Window key={win.uniqueId} win={win} />
                         })
@@ -42,7 +41,15 @@ class Desktop extends Component{
                                 </div>
                             </div>
                         </DropDown> */}
-                    <div className="task-bar-section tasks"></div>
+                    <div className="task-bar-section tasks">
+                        {
+                            this.props.windows.map(win=>{
+                                return  <span title={win.name} key={win.uniqueId} className="task-bar-item started" onClick={()=>this.props.onMinimize(win.uniqueId)}>
+                                            <span className="mif-cog"></span>
+                                        </span>
+                            })
+                        }
+                    </div>
                     <div className="task-bar-section system-tray ml-auto">
                         <button className="task-bar-item" id="open-charm" ><span className="mif-comment"></span></button>
                         <span style={{lineHeight: "40px"}} className="pr-4">
@@ -61,9 +68,10 @@ const mapStateToProps=state=>{
     }
 }
 
-const mapDispatchToProps=dispach=>{
+const mapDispatchToProps=dispatch=>{
     return {
-        onAddWindow:(win)=>dispach(actions.addWindow(win))
+        onAddWindow:(win)=>dispatch(actions.addWindow(win)),
+        onMinimize:(uniqueId)=>dispatch(actions.minimize(uniqueId))
     }
 }
 

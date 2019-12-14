@@ -1,6 +1,7 @@
 import React , {Component} from "react";
 import { connect } from "react-redux"
 import * as actions from "../../store/actions/index"
+import "./Window.css"
 
 class Window extends Component{
 
@@ -25,6 +26,8 @@ class Window extends Component{
        this.window=React.createRef();
 
     }
+
+
     
     componentDidMount(){
        document.addEventListener("touchstart", this.dragStart);
@@ -35,35 +38,26 @@ class Window extends Component{
        document.addEventListener("mouseup", this.dragEnd);
        document.addEventListener("mousemove", this.drag);
 
-       let currentWindow=this.props.windows.find(win=>{
-            return win.uniqueId===this.props.win.uniqueId
-        });
+        
 
-
-        if(currentWindow){
-            console.log("currentwindow"+ currentWindow);
-            if(currentWindow.x && currentWindow.y){
+        if(this.props.win){
+            if(this.props.win.x && this.props.win.y){
                 this.setState({
-                    currentX:currentWindow.x,
-                    currentY:currentWindow.y,
-                    xOffset:currentWindow.x,
-                    yOffset:currentWindow.y
+                    currentX:this.props.win.x,
+                    currentY:this.props.win.y,
+                    xOffset:this.props.win.x,
+                    yOffset:this.props.win.y
                 })
             }
 
-            if(currentWindow.height){
+            if(this.props.win.height){
                 this.setState({
-                    height:currentWindow.height
+                    height:this.props.win.height
                 })
             }
-            if(currentWindow.width){
+            if(this.props.win.width){
                 this.setState({
-                    width:currentWindow.width
-                })
-            }
-            if(currentWindow.zIndex){
-                this.setState({
-                    zIndex:currentWindow.zIndex
+                    width:this.props.win.width
                 })
             }
         }
@@ -81,9 +75,6 @@ class Window extends Component{
 
     windowCLick=()=>{
         this.props.onSetActive(this.props.win.uniqueId)
-        this.setState({
-            zIndex:this.props.lastZIndex+1
-        })
     }
 
     drag=(e)=>{
@@ -95,7 +86,7 @@ class Window extends Component{
             })
         }
 
-       if(this.state.active){
+       if(this.state.active && !this.props.win.maximize){
                e.preventDefault();
          
                if (e.type === "touchmove") {
@@ -176,19 +167,24 @@ class Window extends Component{
     }
 
     render(){
+        let windowClass="window"
+        if(this.props.win.maximize){
+            windowClass="window maximized"
+        }
         return (
-            <div className="window resizable resizeable-element" 
-                onClick={this.windowCLick}
+            <div className={windowClass} 
+                
+                onMouseDown={this.windowCLick}
                 ref={this.window} 
-                style={{position: "absolute", width: this.state.width+"px", height: this.state.height+"px", transform:`translate(${this.state.currentX}px, ${this.state.currentY}px)`, zIndex: this.state.zIndex, cursor: "auto"}} data-role-resizeable="true">
+                style={{position: "absolute", width: this.state.width+"px", height: this.state.height+"px", transform:`translate(${ this.props.win.maximize?0: this.state.currentX}px, ${this.props.win.maximize?0:this.state.currentY}px)`, zIndex: this.props.win.zIndex, cursor: "auto",display: this.props.win.minimize?"none":"inherit"}} data-role-resizeable="true">
                 <div className="window-caption">
                     <span className="icon">
                         <span className="mif-anchor"></span>
                     </span>
                     <span className="title" ref={this.windowHeader}>{this.props.win.name}</span>
                     <div className="buttons">
-                        <span className="button btn-max sys-button"></span>
-                        <span className="button btn-min sys-button"></span>
+                        <span className="button btn-max sys-button" onClick={()=>this.props.onMaximize(this.props.win.uniqueId)}></span>
+                        <span className="button btn-min sys-button" onClick={()=>this.props.onMinimize(this.props.win.uniqueId)}></span>
                         <span className="button btn-close sys-button" onClick={()=>this.props.onCloseWindow(this.props.win.uniqueId)} ></span>
                     </div>
                 </div>
@@ -219,7 +215,9 @@ const mapDispatchToProps=dispatch=>{
     return {
         onCloseWindow:(uniqueId)=>dispatch(actions.closeWindow(uniqueId)),
         onSetPosition:(uniqueId,data)=>dispatch(actions.setPosition(uniqueId,data)),
-        onSetActive:(uniqueId)=>dispatch(actions.setActive(uniqueId))
+        onSetActive:(uniqueId)=>dispatch(actions.setActive(uniqueId)),
+        onMinimize:(uniqueId)=>dispatch(actions.minimize(uniqueId)),
+        onMaximize:(uniqueId)=>dispatch(actions.maximize(uniqueId))
     }
 }
 

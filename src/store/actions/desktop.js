@@ -28,3 +28,17 @@ export const setActive=(uniqueId)=>{
         uniqueId:uniqueId
     }
 }
+
+export const minimize=(uniqueId)=>{
+    return {
+        type:actionTypes.MINIMIZE,
+        uniqueId:uniqueId
+    }
+}
+
+export const maximize=(uniqueId)=>{
+    return {
+        type:actionTypes.MAXIMIZE,
+        uniqueId:uniqueId
+    }
+}
