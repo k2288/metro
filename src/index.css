@@ -1,4 +1,4 @@
-@import url('https://cdn.metroui.org.ua/v4/css/metro-all.min.css');
+/* @import url('https://cdn.metroui.org.ua/v4/css/metro-all.min.css'); */
 @import url('https://cdn.metroui.org.ua/v4/css/metro-icons.min.css');
 
 body {
@@ -8,3 +8,5 @@ body {
   /* background: url("assets/images/Windows-10-lock-screen.jpg") center center no-repeat; */
   /* background-size: cover; */
 }
+
+

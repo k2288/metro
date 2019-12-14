@@ -1,5 +1,5 @@
 import React ,{ Component } from "react"
-import "./Metro.css";
+import styles from "./Metro.module.css";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import UserManagement from "../../components/UserManagement/UserManagement"
@@ -8,7 +8,8 @@ class Metro extends Component{
 
     openWindow=()=>{
         this.props.onAddWindow({
-            name:"user management",
+            name:"User Management",
+            icon:"mif-user",
             component:<UserManagement id={1} />
         })
 
@@ -18,7 +19,7 @@ class Metro extends Component{
     render(){
         
         return (
-            <div className="bg-dark fg-white h-vh-100 ">
+            <div className="bg-dark fg-white h-vh-100">
                 <div className="container-fluid start-screen h-100" style={{overflow: "auto"}}>
                         <div className="start-screen-title" style={{display:'flex',alignItems:"center",width:"inherit"}}>
                             <h1 style={{width:"inherit"}} >Start</h1>
@@ -26,7 +27,7 @@ class Metro extends Component{
                                 {this.props.user.username}
                             </h3>
                             <div onClick={this.props.onLogout} >
-                                <span className="mif-settings-power icon" style={{fontSize: "25px",marginLeft: "18px",cursor:"pointer"}}></span>
+                                <span className="mif-switch icon" style={{fontSize: "25px",marginLeft: "18px",cursor:"pointer"}}></span>
                             </div>
                             <div style={{width:"30%"}}></div>
                         </div>

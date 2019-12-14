@@ -46,6 +46,8 @@
     -webkit-box-direction: normal;
         -ms-flex-flow: row nowrap;
             flex-flow: row nowrap;
+            
+
   }
   .task-bar .task-bar-item {
     position: relative;

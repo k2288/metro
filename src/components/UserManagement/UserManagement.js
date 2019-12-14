@@ -57,28 +57,29 @@ class UserManagement extends Component {
 
         return (
             <div className="row">
-                <div className="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table">
+                
+                <div className="col-md-24" >
+                    <div className="table-responsive">
+                        <table className="table">
                             <thead>
                             <tr>
-                                <th>نام</th>
-                                <th>ایمیل</th>
-                                <th class="text-right">نام کاربری</th>
-                                <th class="text-right">وضعیت</th>
+                                <th className="text-right">نام</th>
+                                <th className="text-right">ایمیل</th>
+                                <th className="text-right">نام کاربری</th>
+                                <th className="text-right">وضعیت</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody style={{fontSize:"10px"}}>
                             {
                                 this.props.result.contents.map(user=>{
                                     return (
                                         <tr key={user.uuid}>
-                                            <td> {user.firstName} {user.lastName}</td>
-                                            <td>{user.email}</td>
-                                            <td class="text-right">{user.username}</td>
-                                            <td class="text-right">{
-                                                user.enable?<span class="mif-blocked"></span>:
-                                                <span class="mif-checkmark"></span>
+                                            <td className="text-right"> {user.firstName} {user.lastName}</td>
+                                            <td className="text-right">{user.email}</td>
+                                            <td className="text-right">{user.username}</td>
+                                            <td className="text-right">{
+                                                user.enabled?<span className="label label-primary">فعال</span>:
+                                                <span className="label label-danger">غیرفعال</span>
                                             }</td>
                                         </tr>
                                     )

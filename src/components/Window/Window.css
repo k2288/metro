@@ -1,8 +1,328 @@
-.window.maximized {
+.ui-widget-content.maximized {
     top: 0!important;
     left: 0!important;
     width: 100% !important;
     height: 100% !important;
     max-height: none !important;
     max-width: none !important;
+}
+
+
+span {
+    font-size: 0.75em;
+    cursor: default;
+}
+ul {
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 0;
+    /*padding: 2px 0px 2px 15px;*/
+    /* width: 100%; */
+}
+ul ul li {
+    padding: 3px 0px 3px 35px;
+}
+
+/* ul ul li:hover, .group:hover, td:hover {
+    background: rgb(229, 243, 255);
+} */
+
+#folder-tree ul ul li:hover, .group:hover {
+    cursor: pointer;
+}
+
+ul ul li:active, .group:active, .current-folder {
+    background: rgb(204, 232, 255);
+}
+
+/* td:active, td:visited {
+    background: rgb(204, 232, 255);
+    border: 1px solid rgb(153, 209, 255);
+} */
+
+div>ul {
+    height: 95%; 
+    width: 75%;
+    overflow:hidden;
+    overflow-y:scroll;
+}
+
+div {
+    cursor: default;
+}
+
+td {
+    width: 20%;
+    border: 1px solid white;
+    text-align: center;
+}
+table, tr {
+    width: 100%;
+}
+
+.small-icon {
+    width: 18px;
+    height: 100%;
+}
+
+.folder-name {
+    width: 100%;
+    font-size: 0.75em;
+    text-align: center;
+}
+
+.group {
+    font-size: 0.9em;
+    padding: 4px 0px 4px 25px;
+}
+
+#titlebar {
+    height: 30px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#titlebar span {
+    margin: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4.5px;
+    padding-bottom: 4.5px;
+}
+
+.max-min-close {
+    float: right;
+    width: 30px;
+    padding: 10px;
+    text-align: center;
+}
+
+#close, #min {
+    font-size: 0.9em;
+}
+span#max {
+    font-size: 1.4em;
+    line-height: 0.7em;
+    padding-bottom: 10px;
+}
+
+#max:hover, #min:hover {
+    background-color: rgb(229,229,229);
+}
+
+#close:hover {
+    color:white;
+    background-color: rgb(232,17,35);
+}
+
+#menubar {
+    height: 22px;
+    border-bottom: 1px solid rgb(218, 219, 220);
+}
+
+#menubar span {
+    margin: 0.1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+    font-size: 0.7em;
+}
+
+#menubar span:not(#file) {
+    border: 1px solid white;
+    border-bottom: 0px;
+}
+
+#menubar span:not(#file):hover {
+    border: 1px solid rgb(218, 219, 220);
+    border-bottom: 0px;
+}
+
+#file {
+    border-top: 1px solid #1979CA;
+    border-right: 1px solid #1979CA;
+    background-color: #1979CA;
+    color: white;
+}
+
+#file:hover {
+    background-color: rgb(41, 140, 255);
+}
+
+#addressbar {
+    padding: 0px 4px 0px 4px;
+}
+
+#addressbar>input {
+    padding: 1px 4px 1px 4px;
+    margin: 6px;
+    border: 1px solid rgb(218, 219, 220);
+    float:right;
+}
+
+#searchbox {
+    color: rgb(161, 161, 161);
+
+    width: 20%;
+}
+
+#addressbox {
+    color: black;
+    width: 50%;
+}
+
+#content-block {
+    /* height: 82%;
+    width: 100%;
+    position: absolute;
+    bottom: 0; */
+}
+
+#folder-tree {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 30%;
+    height: 95%;
+}
+
+#folder-tree img {
+    width: 20px;
+    float: left;
+}
+
+#folder-tree span.grpup, #folder-tree li {
+    font-size: 0.9em;
+}
+
+#main-content {
+    position: absolute;
+    top: 0px;
+    left: 23.5%;
+    width: 75%;
+    height: 95%;
+}
+
+#main-content img {
+    height: 80px;
+    width: 80px;
+}
+
+#statusbar {
+    position: absolute;
+    top:95%;
+    height: 5%;
+    width: 100%;
+}
+
+#status {
+    font-size: 0.7em;
+    padding: 3px 10px 3px 10px;
+    line-height: 0.5em;
+}
+
+#file-explorer {
+    width: 720px;
+    height: 480px;
+    position: fixed;
+    margin: auto;
+    top: 10%;
+    left: 25%;
+    padding: 0;
+    border: 1px solid rgb(99, 180, 251);
+    box-shadow: 0 0 15px gray;
+    background-color: white;
+}
+
+#taskbar-wrapper {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#taskbar {
+    height: 43px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+#quickstart {
+    float: left;
+}
+
+#quickstart img {
+    width: 24px;
+    height: 100%;
+    padding-left: 12.5px;
+    padding-right: 12.5px;
+    padding-top: 7.8px;
+    padding-bottom: 7.8px;
+    margin: 0px;
+}
+
+#taskbar img:hover, #tray>span:hover {
+    background-color: #191C1F;
+}
+
+#taskbar img:active, #tray>span:active {
+    background-color: rgb(12, 16, 20);
+}
+
+#tray {
+    height: 100%;
+    width: 240px;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+#tray span {
+    margin: 0;
+    font-size: 0.75em;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 5.5px;
+    padding-bottom: 5.5px;
+    float: right;
+    color: white;
+    text-align: center;
+}
+
+#language {
+    line-height: 270%;
+}
+
+.resize-element {
+    display: block;
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    z-index: 101;
+    cursor: nwse-resize;
+    width: 12px;
+    height: 12px;
+}
+.rct-collapse, .rct-checkbox, .rct-node-icon {
+    padding: 0 !important;
+}
+
+.rct-node{
+    font-size: 20px;
+}
+
+.table thead tr th {
+    border-left: 1px solid rgba(0,0,0,.2);
+    border-bottom: none;
 }

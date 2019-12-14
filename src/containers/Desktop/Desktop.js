@@ -45,13 +45,13 @@ class Desktop extends Component{
                         {
                             this.props.windows.map(win=>{
                                 return  <span title={win.name} key={win.uniqueId} className="task-bar-item started" onClick={()=>this.props.onMinimize(win.uniqueId)}>
-                                            <span className="mif-cog"></span>
+                                            <span className={win.icon}></span>
                                         </span>
                             })
                         }
                     </div>
-                    <div className="task-bar-section system-tray ml-auto">
-                        <button className="task-bar-item" id="open-charm" ><span className="mif-comment"></span></button>
+                    <div className="task-bar-section system-tray ml-auto" >
+                        {/* <button className="task-bar-item" id="open-charm" ><span className="mif-comment"></span></button> */}
                         <span style={{lineHeight: "40px"}} className="pr-4">
                             <span data-role="clock" className="w-auto fg-white reduce-1" data-show-date="false"></span>
                         </span>
