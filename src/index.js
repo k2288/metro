@@ -8,13 +8,15 @@ import thunk from "redux-thunk";
 import global from "./store/reducers/global"
 import auth from "./store/reducers/auth"
 import desktop from "./store/reducers/desktop"
+import user from "./store/reducers/user"
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer=combineReducers({
   auth: auth,
   global: global,
-  desktop: desktop
+  desktop: desktop,
+  user:user
 });
 
 const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(

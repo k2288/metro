@@ -8,10 +8,7 @@ const reducer=(state=initialState,action)=>{
         case actionTypes.ADD_NEW_WINDOW:
             return {
                 ...state,
-                windows:state.windows.concat({
-                    id:new Date(),
-                    name:"new window"
-                })
+                windows:state.windows.concat(action.win)
             }
         case actionTypes.REMOVE_WINDOW:
             let newWindows=state.windows.filter(win=>{

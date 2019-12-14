@@ -7,24 +7,27 @@ import * as actions from "../../store/actions/index"
 
 class Desktop extends Component{
 
+    
+    openMetro=()=>{
+        this.props.history.push("/metro")
+    }
 
     render(){
-        console.log(this.props.windows)
         return (
             <div className="desktop">
                 <div className="window-area">
-                    asdf
                     {
                         
                         this.props.windows.map(win=>{
                             return <Window key={win.id} win={win} />
                         })
                     }
-                    
-
                 </div>
                 <div className="task-bar">
-                        <DropDown >
+                    <button className="task-bar-item" id="start-menu-toggle" onClick={this.openMetro}>
+                        <span className="mif-windows"></span>
+                    </button>
+                        {/* <DropDown >
                             <div className="start-menu-inner h-100">
                                 <div className="explorer">
                                     <ul className="v-menu w-100 bg-brandColor2 fg-white">
@@ -38,7 +41,7 @@ class Desktop extends Component{
                                     </ul>
                                 </div>
                             </div>
-                        </DropDown>
+                        </DropDown> */}
                     <div className="task-bar-section tasks"></div>
                     <div className="task-bar-section system-tray ml-auto">
                         <button className="task-bar-item" id="open-charm" ><span className="mif-comment"></span></button>

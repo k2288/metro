@@ -5,8 +5,10 @@ import { Route ,Switch , Redirect} from "react-router";
 import axios from "./Axios-Hami";
 import Desktop from "./containers/Desktop/Desktop";
 import SignIn from "./containers/SignIn/SignIn";
+import Metro from "./containers/Metro/Metro"
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index"
+
 
 
 
@@ -55,6 +57,7 @@ class App extends Component {
         <Switch>
           
           <Route path="/"  exact component={Desktop} />
+          <Route path="/metro" exact component={Metro} />
           <Redirect to="/" />
         </Switch>
       )

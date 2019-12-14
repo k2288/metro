@@ -14,8 +14,8 @@ class Window extends Component{
         xOffset : 0,
         yOffset : 0,
         positionStyle:"",
-        width:"300px",
-        height:"300px"
+        width:"700px",
+        height:"500px"
     }
 
     constructor(props){
@@ -150,7 +150,11 @@ class Window extends Component{
                         <span className="button btn-close sys-button" onClick={()=>this.props.onCloseWindow(this.props.win.id)} ></span>
                     </div>
                 </div>
-                <div className="window-content">New window content</div>
+                <div className="window-content">
+                    {
+                        this.props.win.component
+                    }
+                </div>
                 <span className="resize-element" ref={this.resizer}></span>
             </div>
         );

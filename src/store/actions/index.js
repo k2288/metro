@@ -15,3 +15,9 @@ export {
     closeWindow
 }
 from "./desktop"
+
+export {
+    createUser,
+    getUsers
+}
+from "./user"
