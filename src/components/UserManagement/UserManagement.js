@@ -14,7 +14,8 @@ class UserManagement extends Component {
 
     }
 
-    editUser=(user)=>{
+    editUser=(user,action)=>{
+        console.log(action,user);
         
         // this.props.onAddWindow(
         //     {
@@ -73,7 +74,12 @@ class UserManagement extends Component {
                             {
                                 this.props.result.contents.map(user=>{
                                     return (
-                                        <tr key={user.uuid}>
+                                        <tr key={user.uuid} onContextMenuCapture={()=>this.props.onOpenContextMenu([
+                                            {label:"ویرایش",callback:()=>this.editUser(user,"EDIT_USER")},
+                                            {label:user.enabled?"غیر فعال کردن":"فعال کردن",callback:()=>this.editUser(user,"CHANGE_STATUS")},
+                                            {label:"ویرایش نقش ها",callback:()=>this.editUser(user,"CHANGE_ROLES")},
+                                            {label:"تغییر رمز عبور",callback:()=>this.editUser(user,"CHANGE_PASSWORD")}
+                                        ])}>
                                             <td className="text-right"> {user.firstName} {user.lastName}</td>
                                             <td className="text-right">{user.email}</td>
                                             <td className="text-right">{user.username}</td>
@@ -106,7 +112,8 @@ const mapStateToProps=state=>{
 const mapDispatchToProps=dispatch=>{
     return {
         onAddWindow:(win)=>dispatch(actions.addWindow(win)),
-        onGetUsers:(offset,pageSize)=>dispatch(actions.getUsers(offset,pageSize))
+        onGetUsers:(offset,pageSize)=>dispatch(actions.getUsers(offset,pageSize)),
+        onOpenContextMenu:(items)=>dispatch(actions.openContextMenu(items))
     }
 }
 

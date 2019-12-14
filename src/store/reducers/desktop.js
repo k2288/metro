@@ -3,7 +3,9 @@ import UniqueId from "../../utils/GenerateId"
 import { stat } from "fs"
 const initialState={
     windows:[],
-    lastZIndex:0
+    lastZIndex:0,
+    contextMenuVisible:false,
+    contextMenuItems:[]
 }
 
 const reducer=(state=initialState,action)=>{
@@ -80,6 +82,17 @@ const reducer=(state=initialState,action)=>{
             return {
                 ...state,
                 windows:newWindows,
+            }
+        case actionTypes.OPEN_CONTEXT_MENU:
+            return {
+                ...state,
+                contextMenuVisible:true,
+                contextMenuItems:action.items
+            }
+        case actionTypes.CLOSE_CONTEXT_MENU:
+            return {
+                ...state,
+                contextMenuVisible:false
             }
             
         default :

@@ -42,3 +42,16 @@ export const maximize=(uniqueId)=>{
         uniqueId:uniqueId
     }
 }
+
+export const openContextMenu=(items)=>{
+    return {
+        type:actionTypes.OPEN_CONTEXT_MENU,
+        items:items
+    }
+}
+
+export const closeContextMenu=(items)=>{
+    return {
+        type:actionTypes.CLOSE_CONTEXT_MENU
+    }
+}

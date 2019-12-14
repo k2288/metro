@@ -4,6 +4,7 @@ import DropDown from "../../components/DropDown/DropDown";
 import Window from "../../components/Window/Window";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index"
+import ContextMenu from "../../components/ContextMenu/ContextMenu"
 
 class Desktop extends Component{
 
@@ -15,6 +16,7 @@ class Desktop extends Component{
     render(){
         return (
             <div className="desktop">
+                <ContextMenu />
                 <div className="window-area">
                     {
                         this.props.windows.map(win=>{

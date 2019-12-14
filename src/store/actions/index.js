@@ -17,7 +17,9 @@ export {
     setPosition,
     setActive,
     minimize,
-    maximize
+    maximize,
+    closeContextMenu,
+    openContextMenu
 }
 from "./desktop"
 
