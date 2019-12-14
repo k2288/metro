@@ -7,9 +7,24 @@ export const addWindow=(win)=>{
     }
 }
 
-export const closeWindow=(id)=>{
+export const closeWindow=(uniqueId)=>{
     return {
         type:actionTypes.REMOVE_WINDOW,
-        id:id
+        uniqueId:uniqueId
+    }
+}
+
+export const setPosition=(uniqueId,data)=>{
+    return {
+        type:actionTypes.SET_WINDOW_POSITION,
+        uniqueId:uniqueId,
+        data:data
+    }
+}
+
+export const setActive=(uniqueId)=>{
+    return {
+        type:actionTypes.SET_ACTIVE,
+        uniqueId:uniqueId
     }
 }

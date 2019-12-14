@@ -12,7 +12,9 @@ from "./auth"
 
 export {
     addWindow,
-    closeWindow
+    closeWindow,
+    setPosition,
+    setActive
 }
 from "./desktop"
 

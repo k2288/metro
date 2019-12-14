@@ -3,15 +3,14 @@ import "./Metro.css";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import UserManagement from "../../components/UserManagement/UserManagement"
-
+import UniqueId from "../../utils/GenerateId"
 
 class Metro extends Component{
 
     openWindow=()=>{
         this.props.onAddWindow({
-            id:new Date(),
             name:"user management",
-            component:<UserManagement />
+            component:<UserManagement id={1} />
         })
 
         this.props.history.replace("/")

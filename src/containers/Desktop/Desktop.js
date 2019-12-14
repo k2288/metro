@@ -19,7 +19,7 @@ class Desktop extends Component{
                     {
                         
                         this.props.windows.map(win=>{
-                            return <Window key={win.id} win={win} />
+                            return <Window key={win.uniqueId} win={win} />
                         })
                     }
                 </div>

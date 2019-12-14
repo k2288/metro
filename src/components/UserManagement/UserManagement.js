@@ -15,30 +15,28 @@ class UserManagement extends Component {
     }
 
     editUser=(user)=>{
-        let id =new Date();
-        this.props.onAddWindow(
-            {
-                id:id,
-                name:'  ویرایش کاربر',
-                component:<EditUser user={user} windowId={id}  />
-            }
-        )
+        
+        // this.props.onAddWindow(
+        //     {
+        //         name:'  ویرایش کاربر',
+        //         component:<EditUser user={user} windowId={id}  />
+        //     }
+        // )
     }
 
     createUser=()=>{
-        let id =new Date();
-        this.props.onAddWindow(
-            {
-                id:id,
-                name:'ایجاد کاربر',
-                component:<EditUser  windowId={id}  />
-            }
-        )
+    
+        // this.props.onAddWindow(
+        //     {
+        //         name:'ایجاد کاربر',
+        //         component:<EditUser  windowId={id}  />
+        //     }
+        // )
     }
 
 
     componentDidMount=()=>{
-        this.props.onGetUsers(this.state.offset,this.state.pageSize);
+        // this.props.onGetUsers(this.state.offset,this.state.pageSize);
 
         // axios.get(`/api/users/${this.state.offset}/${this.state.pageSize}`)
         //     .then(resp=>{
