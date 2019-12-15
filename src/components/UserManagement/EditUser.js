@@ -3,7 +3,9 @@ import { connect } from "react-redux"
 import * as actions from "../../store/actions/index"
 import InputMask from "react-input-mask"
 import Aux from "../../aux/Aux";
-import moment from 'jalali-moment'
+import moment from 'jalali-moment';
+import Select from 'react-select';
+
 
 class EditUser extends Component{
 
@@ -23,7 +25,7 @@ class EditUser extends Component{
             "credentialsNonExpired": false,
             "enabled": false,
             "birthDate": "",
-            "authorities": ""
+            "authorities": []
         }
     }
 
@@ -31,40 +33,29 @@ class EditUser extends Component{
     componentDidMount=()=>{
         
         let user={...this.props.user};
-        console.log(user);
-        user.birthDate= user.birthDate? moment(user.birthDate).locale('fa').format('YYYY/MM/DD'):""
+        try{
+            user.birthDate= user.birthDate? moment(user.birthDate).locale('fa').format('YYYY/MM/DD'):""
+        }catch(e){
+            user.birthDate=""
+        }
+        
         this.setState({
             user:user
         })
 
-        // this.onLoadRoles();
+        this.props.onSearchRoles("");
     }
 
     submitHandler=(event)=>{
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        let data={}
-        for (var [key, value] of formData.entries()) { 
-            if(["accountNonExpired","accountNonLocked","enabled","credentialsNonExpired"].includes(key)){
-                data[key]=value=="on"?true:false;
-            }else{
-                data[key]=value;
-            }
-            
-        }
 
-        data["authorities"]=[
-            {
-                "authority": "string",
-                "entityName": "string",
-                "title": "string",
-                "uuid": "string"
-              }
-        ]
-        
-        console.log(data);
-        if(data){
-            this.props.onCreateUser(data,this.props.windowId)
+        if(this.state.user.uuid){
+            let user={...this.state.user}
+            if(user.birthDate){
+                user.birthDate=moment.from(user.birthDate, 'fa', 'YYYY/MM/DD').format()
+            }
+            this.props.onEditUser(user,this.props.windowId);
+        }else{
+            this.props.onCreateUser(this.state.user,this.props.windowId)
         }
     }
 
@@ -80,11 +71,23 @@ class EditUser extends Component{
 
     }
 
+    changeRoleHandler=(selectedOption)=>{
+        console.log(selectedOption)
+        
+        let user={...this.state.user};
+        console.log(user.authorities)
+        user.authorities=selectedOption
+        this.setState({
+            user:user
+        })
+        console.log(user)
+    }
+
 
     render(){
         return (
             <Aux >
-                <form onSubmit={this.submitHandler}>
+                <form >
                 <div className="row" style={{marginTop:"15px"}}>
                     {
                         this.props.error?
@@ -108,7 +111,7 @@ class EditUser extends Component{
                         <div className="col-md-24 col-xs-24">
                             <ul className="nav nav-tabs" role="tablist" style={{overflowY:"initial"}}>
                                 <li role="presentation" className="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">عمومی</a></li>
-                                <li role="presentation"><a href="#state" aria-controls="state" role="tab" data-toggle="tab">حالت</a></li>
+                                <li role="presentation"><a href="#state" aria-controls="state" role="tab" data-toggle="tab">وضعیت</a></li>
                                 <li role="presentation"><a href="#role" aria-controls="role" role="tab" data-toggle="tab">نقش</a></li>
                                 
                             </ul>
@@ -121,12 +124,12 @@ class EditUser extends Component{
                                         <div className="col-md-12 col-xs-12">
                                             <div className="form-group">
                                                 <label htmlFor="lastName">ایمیل</label>
-                                                <input type="text" className="form-control" name="email" onChange={this.inputChangeHandler} value={this.state.user.email} id="email" placeholder="ایمیل کابر را وارد کنید" />
+                                                <input type="text" className="form-control" name="email" onChange={this.inputChangeHandler} value={this.state.user.email} id="email" placeholder="ایمیل کاربر را وارد کنید" />
                                             </div>
-                                            <div className="form-group">
+                                            {/* <div className="form-group">
                                                 <label htmlFor="username">نام کاربری</label>
-                                                <input type="text" className="form-control" name="username" value={this.state.user.username} onChange={this.inputChangeHandler} id="username" placeholder="نام کابری را وارد کنید" />
-                                            </div>
+                                                <input type="text" className="form-control" name="username" value={this.state.user.username} onChange={this.inputChangeHandler} id="username" placeholder="نام کاربری را وارد کنید" />
+                                            </div> */}
                                         </div>
                                         <div className="col-md-12 col-xs-12">
                                             <input type="hidden" name="entityName"  value="Users" />
@@ -135,17 +138,17 @@ class EditUser extends Component{
 
                                             <div className="form-group">
                                                 <label htmlFor="firstName">نام</label>
-                                                <input type="text" className="form-control" name="firstName" value={this.state.user.firstName} onChange={this.inputChangeHandler} id="firstName"  placeholder="نام کابر را وارد کنید" />
+                                                <input type="text" className="form-control" name="firstName" value={this.state.user.firstName} onChange={this.inputChangeHandler} id="firstName"  placeholder="نام کاربر را وارد کنید" />
                                             </div>
 
                                             <div className="form-group">
                                                 <label htmlFor="lastName">نام خانوادگی</label>
-                                                <input type="text" className="form-control" name="lastName" value={this.state.user.lastName} onChange={this.inputChangeHandler} id="lastName" placeholder="نام خانوادگی کابر را وارد کنید" />
+                                                <input type="text" className="form-control" name="lastName" value={this.state.user.lastName} onChange={this.inputChangeHandler} id="lastName" placeholder="نام خانوادگی کاربر را وارد کنید" />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="nationalCode">کدملی</label>
-                                                <InputMask mask="9999999999" value={this.state.user.nationalCode} onChange={this.inputChangeHandler} >
-                                                    <input type="text" className="form-control" name="nationalCode"  id="nationalCode" placeholder="کدملی کابر را وارد کنید" />
+                                                <InputMask mask="9999999999" value={this.state.user.nationalCode?this.state.user.nationalCode:""} onChange={this.inputChangeHandler} >
+                                                    <input type="text" className="form-control" name="nationalCode"  id="nationalCode" placeholder="کدملی کاربر را وارد کنید" />
                                                 </InputMask>
                                             </div>
 
@@ -213,15 +216,14 @@ class EditUser extends Component{
                                 <div role="tabpanel" className="tab-pane" id="role">
                                     <div className="row">
                                         <div className="col-md-12 col-xs-12">
-                                            {
-
-                                            }
-                                            <div className="checkbox">
-                                                <label>
-                                                    <input type="checkbox" name="credentialsNonExpired" onChange={this.inputChangeHandler} checked={this.state.user.credentialsNonExpired} />
-                                                    <span>credentialsNonExpired</span>
-                                                </label>
-                                            </div>
+                                            <Select
+                                                getOptionLabel={option=>option.title}
+                                                getOptionValue={option=>option.uuid }
+                                                isMulti
+                                                value={this.state.user.authorities}
+                                                onChange={this.changeRoleHandler}
+                                                options={this.props.roles.contents}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +233,7 @@ class EditUser extends Component{
                 </div>
                 <div className="row" style={{position: "absolute",bottom: "10px"}}>
                     <div className="col-md-24 col-xs-24">
-                        <button type="submit" className="btn btn-default no-outline">تایید</button>
+                        <button type="button" onClick={this.submitHandler} className="btn btn-default no-outline">تایید</button>
                     </div>
                 </div>
                 </form>
@@ -245,14 +247,15 @@ const mapStateToProps=state=>{
     return {
         loading:state.user.saveUserLoading,
         error:state.user.saveUserFailed,
-        roles:state.user.roles
+        roles:state.user.searchedRole
     }
 }
 
 const mapDispatchToProps=dispatch=>{
     return {
         onCreateUser:(data,windowId)=>dispatch(actions.createUser(data,windowId)),
-        // onLoadRoles:()=>dispatch(actions.loadRoles())
+        onSearchRoles:(term)=>dispatch(actions.searchRoles(term)),
+        onEditUser:(data,windowId)=>dispatch(actions.editUser(data,windowId))
     }
 }
 

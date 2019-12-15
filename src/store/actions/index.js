@@ -25,6 +25,8 @@ from "./desktop"
 
 export {
     createUser,
-    getUsers
+    getUsers,
+    searchRoles,
+    editUser
 }
 from "./user"

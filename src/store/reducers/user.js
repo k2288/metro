@@ -8,6 +8,9 @@ const initialState={
     getUserFailed:null,
     users:{
         contents:[]
+    },
+    searchedRole:{
+        contents:[]
     }
 }
 
@@ -51,8 +54,14 @@ const reducer=(state=initialState,action)=>{
                 getUserFailed:null,
                 getUserLoading:false,
                 users:action.users
-
             }
+        case actionTypes.SEARCH_ROLE_SUCCESS:
+            console.log(action.roles)
+            return {
+                ...state,
+                searchedRole:action.roles
+            }
+
         default:
             return state;
     }

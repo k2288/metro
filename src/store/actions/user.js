@@ -37,6 +37,25 @@ export const createUser=(user,windowId)=>{
     }
 }
 
+export const editUser=(user,windowId)=>{
+    return dispatch=>{
+        dispatch(saveUserStart());
+
+        axios.put("api/users/edit",user)
+            .then(resp=>{
+                dispatch(saveUserSuccess());
+                dispatch(actions.closeWindow(windowId))
+                dispatch(actions.getUsers(0,10))
+            })
+            .catch(err=>{
+                // dispatch(actions.handlerError())
+                dispatch(saveUserFailed(err.response.data))
+            })
+    }
+}
+
+
+
 const getUsersStart=()=>{
     return {
         type:actionTypes.GET_USERS_START
@@ -71,8 +90,30 @@ export const getUsers=(offset,pageSize)=>{
     }
 }
 
-// export const loadRoles=()=>{
-//     return dispatch=>{
-//         axios.post()
-//     }
-// }
+const searchRolesSuccess=(roles)=>{
+    return {
+        type:actionTypes.SEARCH_ROLE_SUCCESS,
+        roles:roles
+    }
+}
+
+export const searchRoles=(term)=>{
+    return dispatch=>{
+        let data={
+            "direction": "ASC",
+            "offset": 0,
+            "pageSize": 10,
+            "sortBy": [
+              "string"
+            ],
+            "title": term
+          }
+        axios.post("/api/roles/find",data)
+        .then(resp=>{
+            dispatch(searchRolesSuccess(resp.data))
+        })
+        .catch(resp=>{
+            // dispatch(action.)
+        })
+    }
+}
