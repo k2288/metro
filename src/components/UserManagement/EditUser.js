@@ -18,30 +18,30 @@ class EditUser extends Component{
             "nationalCode": "",
             "email": "",
             "username": "",
-            "userLevel": "",
+            "userLevel": "LOW",
             "registerDate": "",
             "accountNonExpired": false,
             "accountNonLocked": false,
             "credentialsNonExpired": false,
             "enabled": false,
             "birthDate": "",
-            "authorities": []
+            "authorities": [],
+            "password":""
         }
     }
 
 
     componentDidMount=()=>{
         
-        let user={...this.props.user};
-        try{
+        if(this.props.user){
+            let user={...this.props.user};
             user.birthDate= user.birthDate? moment(user.birthDate).locale('fa').format('YYYY/MM/DD'):""
-        }catch(e){
-            user.birthDate=""
+            this.setState({
+                user:user
+            })
         }
-        
-        this.setState({
-            user:user
-        })
+
+
 
         this.props.onSearchRoles("");
     }
@@ -53,6 +53,7 @@ class EditUser extends Component{
             if(user.birthDate){
                 user.birthDate=moment.from(user.birthDate, 'fa', 'YYYY/MM/DD').format()
             }
+            delete user.password;
             this.props.onEditUser(user,this.props.windowId);
         }else{
             this.props.onCreateUser(this.state.user,this.props.windowId)
@@ -75,12 +76,10 @@ class EditUser extends Component{
         console.log(selectedOption)
         
         let user={...this.state.user};
-        console.log(user.authorities)
         user.authorities=selectedOption
         this.setState({
             user:user
         })
-        console.log(user)
     }
 
 
@@ -126,10 +125,22 @@ class EditUser extends Component{
                                                 <label htmlFor="lastName">ایمیل</label>
                                                 <input type="text" className="form-control" name="email" onChange={this.inputChangeHandler} value={this.state.user.email} id="email" placeholder="ایمیل کاربر را وارد کنید" />
                                             </div>
-                                            {/* <div className="form-group">
-                                                <label htmlFor="username">نام کاربری</label>
-                                                <input type="text" className="form-control" name="username" value={this.state.user.username} onChange={this.inputChangeHandler} id="username" placeholder="نام کاربری را وارد کنید" />
-                                            </div> */}
+                                            {   !this.props.user?
+                                                <div className="form-group">
+                                                    <label htmlFor="username">نام کاربری</label>
+                                                    <input type="text" className="form-control" name="username" value={this.state.user.username} onChange={this.inputChangeHandler} id="username" placeholder="نام کاربری را وارد کنید" />
+                                                </div>
+                                                :null
+                                            }
+
+                                            {   !this.props.user?
+                                                <div className="form-group">
+                                                    <label htmlFor="username">رمز عبور</label>
+                                                    <input type="text" className="form-control" name="password" value={this.state.user.password} onChange={this.inputChangeHandler} id="username" placeholder="نام کاربری را وارد کنید" />
+                                                </div>
+                                                :null
+                                            }
+                                            
                                         </div>
                                         <div className="col-md-12 col-xs-12">
                                             <input type="hidden" name="entityName"  value="Users" />
@@ -163,7 +174,37 @@ class EditUser extends Component{
                                 </div>
                                 <div role="tabpanel" className="tab-pane" id="state">
                                     <div className="row">
-                                        <div className="col-md-12 col-xs-12"></div>
+                                        <div className="col-md-12 col-xs-12">
+                                            <div className="form-group">
+                                                <p className="form-group-label">سطح کاربر </p>
+                                                <div className="radio">
+                                                    <label>
+                                                        <input type="radio" name="userLevel"  value="LOW" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="LOW"}/>
+                                                        <span>Low</span>
+                                                    </label>
+                                                </div>
+                                                <div className="radio">
+                                                    <label>
+                                                        <input type="radio" name="userLevel" value="MEDIUM" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="MEDIUM"}  />
+                                                        <span>MEDIUM</span>
+                                                    </label>
+                                                </div>
+                                                <div className="radio">
+                                                    <label>
+                                                        <input type="radio" name="userLevel" value="HIGH" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="HIGH"}  />
+                                                        <span>High</span>
+                                                    </label>
+                                                </div>
+                                                <div className="radio">
+                                                    <label>
+                                                        <input type="radio" name="userLevel" value="VERY_HIGH" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="VERY_HIGH"}  />
+                                                        <span>VERY_HIGH</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
                                         <div className="col-md-12 col-xs-12">
 
                                             <div className="checkbox">
@@ -194,22 +235,7 @@ class EditUser extends Component{
                                             </div>
 
 
-                                            <div className="form-group">
-                                                <p className="form-group-label">سطح کاربر </p>
-                                                <div className="radio">
-                                                    <label>
-                                                        <input type="radio" name="userLevel"  value="LOW" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="LOW"}/>
-                                                        <span>Low</span>
-                                                    </label>
-                                                </div>
-                                                <div className="radio">
-                                                    <label>
-                                                        <input type="radio" name="userLevel" value="HIGH" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="HIGH"}  />
-                                                        <span>High</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                           </div>
 
                                     </div>
                                 </div>

@@ -66,7 +66,7 @@ class UserManagement extends Component {
                 
                 <div className="col-md-24" >
                     <div className="table-responsive">
-                        <table className="table">
+                        <table className="table" >
                             <thead>
                             <tr>
                                 <th className="text-right">نام</th>
@@ -81,8 +81,12 @@ class UserManagement extends Component {
                                     return (
                                         <tr key={user.uuid} onContextMenuCapture={()=>this.props.onOpenContextMenu([
                                             {label:"ویرایش",callback:()=>this.editUser(user,"EDIT_USER")},
-                                            {label:user.enabled?"غیر فعال کردن":"فعال کردن",callback:()=>this.editUser(user,"CHANGE_STATUS")},
-                                            {label:"ویرایش نقش ها",callback:()=>this.editUser(user,"CHANGE_ROLES")},
+                                            {label:"کاربر جدید",callback:()=>this.props.onAddWindow({
+                                                name:"کاربر جدید",
+                                                icon:"glyph glyph-settings",
+                                                type:"USERS_MANAGMENT_NEW_USER",
+                                                component:<EditUser />
+                                            })},
                                             {label:"تغییر رمز عبور",callback:()=>this.editUser(user,"CHANGE_PASSWORD")}
                                         ])}>
                                             <td className="text-right"> {user.firstName} {user.lastName}</td>

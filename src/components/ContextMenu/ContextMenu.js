@@ -58,15 +58,18 @@ class ContextMenu extends Component {
         const wasOutside = !(event.target.contains === this.root);
         
         if (wasOutside && visible) this.setState({ visible: false, });
+        this.props.onCloseContextMenu();
     };
 
     _handleScroll = () => {
         const { visible } = this.state;
         
         if (visible) this.setState({ visible: false, });
+        this.props.onCloseContextMenu();
     };
 
     click=(item)=>{
+        this.props.onCloseContextMenu();
         item.callback();
     }
     

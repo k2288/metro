@@ -27,3 +27,11 @@ body {
   float: right;
 }
 
+.table, address {
+  margin-bottom: 0;
+}
+
+.table-responsive {
+  padding-bottom: 0;
+}
+

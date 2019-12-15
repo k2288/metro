@@ -1,6 +1,9 @@
 import React , { Component } from "react"
 import Aux from "../../aux/Aux"
 import CheckboxTree from "react-checkbox-tree";
+import { connect } from "react-redux"
+import * as actions from "../../store/actions/index"
+import EditUser from "../UserManagement/EditUser"
 
 class Explorer extends Component{
 
@@ -45,10 +48,29 @@ class Explorer extends Component{
                     }
                      </div>
                 </div>
+                <div className="row" onContextMenuCapture={()=>this.props.onOpenContextMenu([
+                        {label:"کاربر جدید",callback:()=>{
+                            this.props.onAddWindow({
+                                name:"کاربر جدید",
+                                icon:"glyph glyph-settings",
+                                type:"USERS_MANAGMENT_NEW_USER",
+                                component:<EditUser />
+                            })
+                        }},
+                    ])} style={{height:"inherit"}}>
+                    
+                </div>
             </Aux>
                 
         )
     }
 }
 
-export default Explorer;
+const mapDispatchToProps=dispatch=>{
+    return {
+        onAddWindow:(win)=>dispatch(actions.addWindow(win)),
+        onOpenContextMenu:(items)=>dispatch(actions.openContextMenu(items))
+    }
+}
+
+export default  connect(null,mapDispatchToProps) (Explorer);

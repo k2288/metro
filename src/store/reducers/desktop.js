@@ -92,7 +92,8 @@ const reducer=(state=initialState,action)=>{
         case actionTypes.CLOSE_CONTEXT_MENU:
             return {
                 ...state,
-                contextMenuVisible:false
+                contextMenuVisible:false,
+                contextMenuItems:[]
             }
             
         default :
