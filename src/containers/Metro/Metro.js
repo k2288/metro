@@ -8,8 +8,17 @@ class Metro extends Component{
 
     openWindow=()=>{
         this.props.onAddWindow({
-            name:"User Management",
-            icon:"mif-user",
+            name:"مدیریت کاربر",
+            icon:"mif-users",
+            nodes:[{
+                value: 'user_management',
+                label: 'مدیریت کاربران',
+                children: [
+                    { value: 'users', label: 'کاربران' },
+                    { value: 'roles', label: 'نقش ها' },
+                ],
+            }],
+            type:"USERS_MANAGMENT",
             component:<UserManagement id={1} />
         })
 

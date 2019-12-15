@@ -1,9 +1,44 @@
 import React , { Component} from "react"
 import { connect } from "react-redux"
 import * as actions from "../../store/actions/index"
+import InputMask from "react-input-mask"
+import Aux from "../../aux/Aux";
+import moment from 'jalali-moment'
 
 class EditUser extends Component{
 
+    state={
+        user:{
+            "uuid": "",
+            "entityName": "",
+            "firstName": "",
+            "lastName": "",
+            "nationalCode": "",
+            "email": "",
+            "username": "",
+            "userLevel": "",
+            "registerDate": "",
+            "accountNonExpired": false,
+            "accountNonLocked": false,
+            "credentialsNonExpired": false,
+            "enabled": false,
+            "birthDate": "",
+            "authorities": ""
+        }
+    }
+
+
+    componentDidMount=()=>{
+        
+        let user={...this.props.user};
+        console.log(user);
+        user.birthDate= user.birthDate? moment(user.birthDate).locale('fa').format('YYYY/MM/DD'):""
+        this.setState({
+            user:user
+        })
+
+        // this.onLoadRoles();
+    }
 
     submitHandler=(event)=>{
         event.preventDefault();
@@ -33,90 +68,174 @@ class EditUser extends Component{
         }
     }
 
+    inputChangeHandler=(event)=>{
+        
+        let user={...this.state.user};
+        let target =event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        user[event.target.name]=value;
+        this.setState({
+            user:user
+        })
+
+    }
+
+
     render(){
         return (
-            <div className="bg-white p-4 m-2">
-                {
-                    this.props.error?
-                    
-                        <div>
-                            <h3>
-                                {this.props.error.message}
-                            </h3>
-                            {
-                                this.props.error.subErrors?
-                                this.props.error.subErrors.map((err,index)=>{
-                                    return <li key={index}>
-                                        {err.message}
-                                    </li>
-                                }):null
-                            }
-                        </div>
-                    :
-                    null
-                }
+            <Aux >
                 <form onSubmit={this.submitHandler}>
+                <div className="row" style={{marginTop:"15px"}}>
+                    {
+                        this.props.error?
+                        
+                            <div>
+                                <h3>
+                                    {this.props.error.message}
+                                </h3>
+                                {
+                                    this.props.error.subErrors?
+                                    this.props.error.subErrors.map((err,index)=>{
+                                        return <li key={index}>
+                                            {err.message}
+                                        </li>
+                                    }):null
+                                }
+                            </div>
+                        :
+                        null
+                    }
+                        <div className="col-md-24 col-xs-24">
+                            <ul className="nav nav-tabs" role="tablist" style={{overflowY:"initial"}}>
+                                <li role="presentation" className="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">عمومی</a></li>
+                                <li role="presentation"><a href="#state" aria-controls="state" role="tab" data-toggle="tab">حالت</a></li>
+                                <li role="presentation"><a href="#role" aria-controls="role" role="tab" data-toggle="tab">نقش</a></li>
+                                
+                            </ul>
+                            
+                            
+                            <div className="tab-content">
+                                <div role="tabpanel" className="tab-pane active" id="general">
+                                    <div className="row">
 
-                    <input type="hidden" name="entityName"  value="Users" />
-                    <input type="hidden" name="registerDate"  value="2019-12-13T20:26:06.086Z" />
-                    <input type="hidden" name="birthDate"  value="2019-12-13T20:26:06.086Z" />
-                    <input type="hidden" name="uuid"  value="string" />
-                    
-                    <div className="form-group">
-                        <label>نام : </label>
-                        <input type="text" name="firstName"  />
-                    </div>
-                    <div className="form-group">
-                        <label>نام خانوادگی :</label>
-                        <input type="text" name="lastName"  />
-                    </div>
-                    <div className="form-group">
-                        <label>کد ملی</label>
-                        <input type="text" name="nationalCode"  />
-                    </div>
-                    <div className="form-group">
-                        <label>ایمیل</label>
-                        <input type="text" name="email"  />
-                    </div>
-                    <div className="form-group">
-                        <label>پسورد</label>
-                        <input type="text" name="password"  />
-                    </div>
-                    <div className="form-group">
-                        <label>نام کاربری</label>
-                        <input type="text" name="username"  />
-                    </div>
-                    <div className="form-group">
-                        <label>accountNonExpired</label>
-                        <input type="checkbox" name="accountNonExpired"  />
-                    </div>
-                    <div className="form-group">
-                        <label>accountNonLocked</label>
-                        <input type="checkbox" name="accountNonLocked"  />
-                    </div>
-                    <div className="form-group">
-                        <label>enabled</label>
-                        <input type="checkbox" name="enabled"  />
-                    </div>
-                    <div className="form-group">
-                        <label>credentialsNonExpired</label>
-                        <input type="checkbox" name="credentialsNonExpired"  />
-                    </div>
-                    {/* <div className="form-group">
-                        <label>تاریخ تولد</label>
-                        <input type="text" name="birthDate"  />
-                    </div> */}
-                    <div className="form-group">
-                        <label>سطح کاربر </label>
-                        <input type="radio" name="userLevel" value="LOW" />
-                        low
-                        <input type="radio" name="userLevel" value="HIGH" />
-                        high
-                    </div>
+                                        <div className="col-md-12 col-xs-12">
+                                            <div className="form-group">
+                                                <label htmlFor="lastName">ایمیل</label>
+                                                <input type="text" className="form-control" name="email" onChange={this.inputChangeHandler} value={this.state.user.email} id="email" placeholder="ایمیل کابر را وارد کنید" />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="username">نام کاربری</label>
+                                                <input type="text" className="form-control" name="username" value={this.state.user.username} onChange={this.inputChangeHandler} id="username" placeholder="نام کابری را وارد کنید" />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12 col-xs-12">
+                                            <input type="hidden" name="entityName"  value="Users" />
+                                            <input type="hidden" name="registerDate"  value="2019-12-13T20:26:06.086Z" />
+                                            <input type="hidden" name="uuid"  value="string" />
 
-                    <button className="button">تایید</button>
+                                            <div className="form-group">
+                                                <label htmlFor="firstName">نام</label>
+                                                <input type="text" className="form-control" name="firstName" value={this.state.user.firstName} onChange={this.inputChangeHandler} id="firstName"  placeholder="نام کابر را وارد کنید" />
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label htmlFor="lastName">نام خانوادگی</label>
+                                                <input type="text" className="form-control" name="lastName" value={this.state.user.lastName} onChange={this.inputChangeHandler} id="lastName" placeholder="نام خانوادگی کابر را وارد کنید" />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="nationalCode">کدملی</label>
+                                                <InputMask mask="9999999999" value={this.state.user.nationalCode} onChange={this.inputChangeHandler} >
+                                                    <input type="text" className="form-control" name="nationalCode"  id="nationalCode" placeholder="کدملی کابر را وارد کنید" />
+                                                </InputMask>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label htmlFor="birthDate">تاریخ تولد</label>
+                                                <InputMask mask="9999/99/99" onChange={this.inputChangeHandler} value={this.state.user.birthDate} >
+                                                    <input type="text" className="form-control" name="birthDate" id="birthDate" placeholder="تاریخ تولد  را وارد کنید" />
+                                                </InputMask>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" className="tab-pane" id="state">
+                                    <div className="row">
+                                        <div className="col-md-12 col-xs-12"></div>
+                                        <div className="col-md-12 col-xs-12">
+
+                                            <div className="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="accountNonExpired" onChange={this.inputChangeHandler} checked={this.state.user.accountNonExpired} />
+                                                    <span>accountNonExpired</span>
+                                                </label>
+                                            </div>
+
+
+                                            <div className="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="accountNonLocked" onChange={this.inputChangeHandler} checked={this.state.user.accountNonLocked} />
+                                                    <span>accountNonLocked</span>
+                                                </label>
+                                            </div>
+                                            <div className="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="enabled" onChange={this.inputChangeHandler} checked={this.state.user.enabled} />
+                                                    <span>enabled</span>
+                                                </label>
+                                            </div>
+                                            <div className="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="credentialsNonExpired" onChange={this.inputChangeHandler} checked={this.state.user.credentialsNonExpired} />
+                                                    <span>credentialsNonExpired</span>
+                                                </label>
+                                            </div>
+
+
+                                            <div className="form-group">
+                                                <p className="form-group-label">سطح کاربر </p>
+                                                <div className="radio">
+                                                    <label>
+                                                        <input type="radio" name="userLevel"  value="LOW" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="LOW"}/>
+                                                        <span>Low</span>
+                                                    </label>
+                                                </div>
+                                                <div className="radio">
+                                                    <label>
+                                                        <input type="radio" name="userLevel" value="HIGH" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="HIGH"}  />
+                                                        <span>High</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div role="tabpanel" className="tab-pane" id="role">
+                                    <div className="row">
+                                        <div className="col-md-12 col-xs-12">
+                                            {
+
+                                            }
+                                            <div className="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="credentialsNonExpired" onChange={this.inputChangeHandler} checked={this.state.user.credentialsNonExpired} />
+                                                    <span>credentialsNonExpired</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+                <div className="row" style={{position: "absolute",bottom: "10px"}}>
+                    <div className="col-md-24 col-xs-24">
+                        <button type="submit" className="btn btn-default no-outline">تایید</button>
+                    </div>
+                </div>
                 </form>
-            </div>
+            </Aux>
 
         );
     }
@@ -125,13 +244,15 @@ class EditUser extends Component{
 const mapStateToProps=state=>{
     return {
         loading:state.user.saveUserLoading,
-        error:state.user.saveUserFailed
+        error:state.user.saveUserFailed,
+        roles:state.user.roles
     }
 }
 
 const mapDispatchToProps=dispatch=>{
     return {
-        onCreateUser:(data,windowId)=>dispatch(actions.createUser(data,windowId))
+        onCreateUser:(data,windowId)=>dispatch(actions.createUser(data,windowId)),
+        // onLoadRoles:()=>dispatch(actions.loadRoles())
     }
 }
 

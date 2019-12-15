@@ -15,7 +15,12 @@ class UserManagement extends Component {
     }
 
     editUser=(user,action)=>{
-        console.log(action,user);
+        this.props.onAddWindow({
+            name:"تنظیمات",
+            icon:"glyph glyph-settings",
+            type:"USERS_MANAGMENT_PROPERTIES",
+            component:<EditUser user={user}   />
+        })
         
         // this.props.onAddWindow(
         //     {

@@ -9,4 +9,21 @@ body {
   /* background-size: cover; */
 }
 
+.row {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.radio label input:checked~span::before {
+
+  padding: 6px 1px;
+}
+
+.checkbox label input:checked~span::before {
+  font-size: 15px;
+}
+
+.nav-tabs>li {
+  float: right;
+}
 

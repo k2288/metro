@@ -70,3 +70,9 @@ export const getUsers=(offset,pageSize)=>{
         })
     }
 }
+
+// export const loadRoles=()=>{
+//     return dispatch=>{
+//         axios.post()
+//     }
+// }

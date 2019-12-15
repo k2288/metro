@@ -4,16 +4,10 @@ import * as actions from "../../store/actions/index"
 import "./Window.css"
 import CheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
+import Explorer from "./Explorer";
 
 
-const nodes = [{
-    value: 'user_management',
-    label: 'مدیریت کاربران',
-    children: [
-        { value: 'users', label: 'کاربران' },
-        { value: 'roles', label: 'نقش ها' },
-    ],
-}];
+
 
 class Window extends Component{
 
@@ -41,8 +35,6 @@ class Window extends Component{
 
     }
 
-
-    
     componentDidMount(){
        document.addEventListener("touchstart", this.dragStart);
        document.addEventListener("touchend", this.dragEnd);
@@ -187,35 +179,20 @@ class Window extends Component{
         if(this.props.win.maximize){
             windowClass="ui-widget-content maximized"
         }
+
+        let content=<div></div>
+        if(this.props.win.type==="USERS_MANAGMENT"){
+             content=<Explorer win={this.props.win} />
+        }else{
+            content=React.cloneElement(
+                this.props.win.component,
+                {
+                    windowId:this.props.win.uniqueId
+                }
+            )
+        }
+
         return (
-            // <div className={windowClass} 
-                
-            //     onMouseDown={this.windowCLick}
-            //     ref={this.window} 
-            //     style={{position: "absolute", width: this.state.width+"px", height: this.state.height+"px", transform:`translate(${ this.props.win.maximize?0: this.state.currentX}px, ${this.props.win.maximize?0:this.state.currentY}px)`, zIndex: this.props.win.zIndex, cursor: "auto",display: this.props.win.minimize?"none":"inherit"}} data-role-resizeable="true">
-            //     <div className="window-caption">
-            //         <span className="icon">
-            //             <span className="mif-anchor"></span>
-            //         </span>
-            //         <span className="title" ref={this.windowHeader}>{this.props.win.name}</span>
-            //         <div className="buttons">
-            //             <span className="button btn-max sys-button" onClick={()=>this.props.onMaximize(this.props.win.uniqueId)}></span>
-            //             <span className="button btn-min sys-button" onClick={()=>this.props.onMinimize(this.props.win.uniqueId)}></span>
-            //             <span className="button btn-close sys-button" onClick={()=>this.props.onCloseWindow(this.props.win.uniqueId)} ></span>
-            //         </div>
-            //     </div>
-            //     <div className="window-content">
-            //         {
-            //             React.cloneElement(
-            //                 this.props.win.component,
-            //                 {
-            //                     windowId:this.props.win.uniqueId
-            //                 }
-            //             )
-            //         }
-            //     </div>
-            //     <span className="resize-element" ref={this.resizer}></span>
-            // </div>
             <div id="file-explorer" className={windowClass} 
                 style={{position: "absolute", width: this.state.width+"px", height: this.state.height+"px", transform:`translate(${ this.props.win.maximize?0: this.state.currentX}px, ${this.props.win.maximize?0:this.state.currentY}px)`, zIndex: this.props.win.zIndex, cursor: "auto",display: this.props.win.minimize?"none":"inherit" ,direction:"rtl"}} 
                 onMouseDown={this.windowCLick}
@@ -229,57 +206,9 @@ class Window extends Component{
                     <span id="max" className="max-min-close" onClick={()=>this.props.onMaximize(this.props.win.uniqueId)}>&#9633;</span>
                     <span id="min" className="max-min-close" onClick={()=>this.props.onMinimize(this.props.win.uniqueId)}>—</span>
                 </div>
-                <div className="row" style={{margin:"0 10px"}}>
-                    <div className="col-md-6 col-xs-6">
-                        <input  style={{margin:"0" ,minHeight:"32px"}} className="form-control" type="search" placeholder="Search Quick ... &nbsp;"/>
-                    </div>
-                    <div className="col-md-18 col-xs-18">
-                        <ol className="breadcrumb" style={{margin:"0",border:"solid 1px black",padding:"7px"}}>
-                            <li><a href="#">لیست کاربران</a></li>
-                            <li className="active">کاربران</li>
-                        </ol>
-                    </div>
-                </div>
-                <div className="row" style={{margin:"10px 10px"}}>
-
-                     <div className="col-md-6 col-xs-6" style={{direction:"ltr"}}>
-                        <CheckboxTree
-                            nodes={nodes}
-                            checked={this.state.checked}
-                            expanded={this.state.expanded}
-                            onCheck={checked => this.setState({ checked })}
-                            onExpand={expanded => this.setState({ expanded })}
-                        />
-                     </div>
-                     <div className="col-md-18 col-xs-18">
-                     {
-                        React.cloneElement(
-                            this.props.win.component,
-                            {
-                                windowId:this.props.win.uniqueId
-                            }
-                        )
-                    }
-                     </div>
-                </div>
-                <div id="content-block">
-                    
-                </div>
-                {/* <div id="menubar">
-                    <span id="file">File</span><span>Home</span><span>Share</span><span>View</span>
-                </div>
-                <div id="addressbar">
-                    <input id="searchbox"  type="search" placeholder="Search Quick ... &nbsp;"></input>
-                    <input id="addressbox" placeholder="Quick access"></input>
-                </div>
-                <div id="content-block">
-                    <div id="folder-tree">
-                    </div>
-                    <div id="main-content"></div>
-                    <div id="statusbar">
-                        <div id="status">15 items</div>
-                    </div>
-                </div> */}
+                {
+                    content
+                }
                 <span className="resize-element" ref={this.resizer}></span>
             </div>
         );

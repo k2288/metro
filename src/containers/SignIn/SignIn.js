@@ -25,7 +25,7 @@ class SignIn extends Component{
         let loginForm=(
             <div>
                 <div className="icon-container" style={{marginBottom:"20px"}}>
-                <span class="glyph glyph-contact"></span>
+                <span className="glyph glyph-contact"></span>
                 </div>
                 <form onSubmit={this.submitHandler} className="login-form  p-6 mx-auto  ">
                     <div className="form-group">
@@ -69,13 +69,13 @@ class SignIn extends Component{
             <div className="signin-screen">
                 {
                     this.props.loading?
-                    <div class="progress-ring progress-large">
-      <div class="progress-circle"></div>
-      <div class="progress-circle"></div>
-      <div class="progress-circle"></div>
-      <div class="progress-circle"></div>
-      <div class="progress-circle"></div>
-    </div>
+                    <div className="progress-ring progress-large">
+                        <div className="progress-circle"></div>
+                        <div className="progress-circle"></div>
+                        <div className="progress-circle"></div>
+                        <div className="progress-circle"></div>
+                        <div className="progress-circle"></div>
+                    </div>
                         // <RingIndicator />
                         :
                     loginForm
