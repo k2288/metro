@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index"
 import ContextMenu from "../../components/ContextMenu/ContextMenu"
 import moment from "jalali-moment"
+import word from "../../assets/images/word.png"
 
 class Desktop extends Component{
     state={
@@ -15,6 +16,7 @@ class Desktop extends Component{
 
     componentDidMount=()=>{
         this.setClockAndDate();
+        this.props.onGetRoot()
     }
 
     setClockAndDate=()=>{
@@ -36,7 +38,22 @@ class Desktop extends Component{
         return (
             <div className="desktop">
                 <ContextMenu />
-                <div className="window-area">
+                <div className="window-area" >
+
+                    {
+                        this.props.folders.contents.map(folder=>{
+                            return (
+                                <div className="folder-wrapper" title={folder.summary}>
+                                    <img className="folder-icon" src={word} />
+                                    <span className="folder-name">{folder.title}</span>
+                                </div>
+                            )
+                        })
+
+
+                    }
+
+
                     {
                         this.props.windows.map(win=>{
                             return <Window key={win.uniqueId} win={win} />
@@ -70,14 +87,16 @@ class Desktop extends Component{
 
 const mapStateToProps=state=>{
     return {
-        windows:state.desktop.windows
+        windows:state.desktop.windows,
+        folders:state.desktop.desktopFolders
     }
 }
 
 const mapDispatchToProps=dispatch=>{
     return {
         onAddWindow:(win)=>dispatch(actions.addWindow(win)),
-        onMinimize:(uniqueId)=>dispatch(actions.minimize(uniqueId))
+        onMinimize:(uniqueId)=>dispatch(actions.minimize(uniqueId)),
+        onGetRoot:()=>dispatch(actions.getRoot())
     }
 }
 

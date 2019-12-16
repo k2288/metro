@@ -6,7 +6,11 @@ const initialState={
     lastZIndex:0,
     contextMenuVisible:false,
     contextMenuItems:[],
-    activeWindowId:""
+    activeWindowId:"",
+    rootFolders:[],
+    desktopFolders:{
+        contents:[]
+    }
 }
 
 const reducer=(state=initialState,action)=>{
@@ -100,7 +104,16 @@ const reducer=(state=initialState,action)=>{
                 contextMenuVisible:false,
                 contextMenuItems:[]
             }
-            
+        case actionTypes.GET_ROOT_FOLDERS_SUCCESS:
+            return {
+                ...state,
+                rootFolders:action.rootFolders
+            }
+        case actionTypes.GET_DESKTOP_FOLDERS_SUCCESS:
+            return {
+                ...state,
+                desktopFolders:action.folders
+            }
         default :
             return state;
     }

@@ -1,4 +1,5 @@
 import * as actionTypes from "./actionTypes"
+import axios from "../../Axios-Hami"
 
 export const addWindow=(win)=>{
     return {
@@ -53,5 +54,47 @@ export const openContextMenu=(items)=>{
 export const closeContextMenu=(items)=>{
     return {
         type:actionTypes.CLOSE_CONTEXT_MENU
+    }
+}
+
+const getRootSucces=(rootFolders)=>{
+    return {
+        type:actionTypes.GET_ROOT_FOLDERS_SUCCESS,
+        rootFolders:rootFolders
+    }
+}
+
+const getDesktopSuccess=(folders)=>{
+    return {
+        type:actionTypes.GET_DESKTOP_FOLDERS_SUCCESS,
+        folders:folders
+    }
+}
+
+
+export const getRoot=()=>{
+    return dispatch=>{
+        axios.get("/api/folder/rootFolders")
+        .then(resp=>{
+            dispatch(getRootSucces(resp.data))
+            if(resp.data){
+                let desktopFolder= resp.data.filter(folder=>{
+                    return folder.title=="Desktop"
+                });
+                console.log(resp.data)
+                console.log(desktopFolder)
+
+                axios.get("/api/folder/children/"+desktopFolder[0].uuid+"/0/10")
+                .then(resp=>{
+                    dispatch(getDesktopSuccess(resp.data))
+                })
+                .catch(err=>{
+
+                })
+            }
+
+        }).catch(err=>{
+
+        })
     }
 }

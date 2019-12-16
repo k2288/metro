@@ -19,7 +19,8 @@ export {
     minimize,
     maximize,
     closeContextMenu,
-    openContextMenu
+    openContextMenu,
+    getRoot
 }
 from "./desktop"
 
