@@ -5,7 +5,8 @@ const initialState={
     windows:[],
     lastZIndex:0,
     contextMenuVisible:false,
-    contextMenuItems:[]
+    contextMenuItems:[],
+    activeWindowId:""
 }
 
 const reducer=(state=initialState,action)=>{
@@ -20,7 +21,8 @@ const reducer=(state=initialState,action)=>{
             return {
                 ...state,
                 windows:newWindows,
-                lastZIndex:state.lastZIndex+1
+                lastZIndex:state.lastZIndex+1,
+                activeWindowId:action.win.uniqueId
             }
         case actionTypes.REMOVE_WINDOW:
             newWindows=state.windows.filter(win=>{
@@ -56,7 +58,8 @@ const reducer=(state=initialState,action)=>{
             return {
                 ...state,
                 windows:newWindows,
-                lastZIndex:state.lastZIndex+1
+                lastZIndex:state.lastZIndex+1,
+                activeWindowId:newWindows[windowIndex].uniqueId
             }
         case actionTypes.MINIMIZE:
             windowIndex=state.windows.findIndex(win=>{
@@ -66,10 +69,12 @@ const reducer=(state=initialState,action)=>{
             
             newWindows[windowIndex].minimize=!newWindows[windowIndex].minimize
             newWindows[windowIndex].zIndex=state.lastZIndex+1
+            let lastActiveWindow=state.lastActiveWindow;
             return {
                 ...state,
                 windows:newWindows,
-                lastZIndex:state.lastZIndex+1
+                lastZIndex:state.lastZIndex+1,
+                lastActiveWindow:newWindows[windowIndex].minimize?newWindows[windowIndex].uniqueId:lastActiveWindow
             }
         case actionTypes.MAXIMIZE:
             windowIndex=state.windows.findIndex(win=>{
@@ -78,10 +83,10 @@ const reducer=(state=initialState,action)=>{
             newWindows=[...state.windows]
             
             newWindows[windowIndex].maximize=!newWindows[windowIndex].maximize
-            console.log(newWindows[windowIndex].minimize)
             return {
                 ...state,
                 windows:newWindows,
+                lastActiveWindow:newWindows[windowIndex].maximize?newWindows[windowIndex].uniqueId:lastActiveWindow
             }
         case actionTypes.OPEN_CONTEXT_MENU:
             return {

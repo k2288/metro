@@ -5,6 +5,12 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index"
 import EditUser from "./EditUser";
 
+const explorerTableHeaderStyle={
+    color: "#77baf7",
+    fontSize: "12px",
+    padding: "4px 10px"
+}
+
 class UserManagement extends Component {
 
     state={
@@ -67,12 +73,12 @@ class UserManagement extends Component {
                 <div className="col-md-24" >
                     <div className="table-responsive">
                         <table className="table" >
-                            <thead>
+                            <thead style={{marginBottom:"10px"}}>
                             <tr>
-                                <th className="text-right">نام</th>
-                                <th className="text-right">ایمیل</th>
-                                <th className="text-right">نام کاربری</th>
-                                <th className="text-right">وضعیت</th>
+                                <th style={explorerTableHeaderStyle} className="text-right">نام</th>
+                                <th style={explorerTableHeaderStyle} className="text-right">ایمیل</th>
+                                <th style={explorerTableHeaderStyle} className="text-right">نام کاربری</th>
+                                <th style={explorerTableHeaderStyle} className="text-right">وضعیت</th>
                             </tr>
                             </thead>
                             <tbody style={{fontSize:"10px"}}>

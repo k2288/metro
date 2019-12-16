@@ -5,9 +5,28 @@ import Window from "../../components/Window/Window";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index"
 import ContextMenu from "../../components/ContextMenu/ContextMenu"
+import moment from "jalali-moment"
 
 class Desktop extends Component{
+    state={
+        time:"",
+        date:""
+    }
 
+    componentDidMount=()=>{
+        this.setClockAndDate();
+    }
+
+    setClockAndDate=()=>{
+        this.setState({
+            time:moment().locale('fa').format('HH:mm'),
+            date:moment().locale('fa').format('YYYY/MM/DD')
+        })
+
+        setTimeout(() => {
+            this.setClockAndDate()
+        }, 1000);
+    }
     
     openMetro=()=>{
         this.props.history.push("/metro")
@@ -28,21 +47,6 @@ class Desktop extends Component{
                     <button className="task-bar-item" id="start-menu-toggle" onClick={this.openMetro}>
                         <span className="mif-windows"></span>
                     </button>
-                        {/* <DropDown >
-                            <div className="start-menu-inner h-100">
-                                <div className="explorer">
-                                    <ul className="v-menu w-100 bg-brandColor2 fg-white">
-                                        <li><a >Youtube window</a></li>
-                                        <li><a onClick={()=>this.props.onAddWindow({
-                                            id:new Date(),
-                                            name:"new window"
-                                        })} >New window</a></li>
-                                        <li><a >Custom buttons</a></li>
-                                        <li><a >Modal window</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </DropDown> */}
                     <div className="task-bar-section tasks">
                         {
                             this.props.windows.map(win=>{
@@ -52,11 +56,11 @@ class Desktop extends Component{
                             })
                         }
                     </div>
-                    <div className="task-bar-section system-tray ml-auto" >
-                        {/* <button className="task-bar-item" id="open-charm" ><span className="mif-comment"></span></button> */}
-                        <span style={{lineHeight: "40px"}} className="pr-4">
-                            <span data-role="clock" className="w-auto fg-white reduce-1" data-show-date="false"></span>
-                        </span>
+
+
+                    <div id="tray">
+                        <span id="system-time">{this.state.time}<br/>{this.state.date}</span>
+                        {/* <span id="language">ENG</span> */}
                     </div>
                 </div>
             </div>

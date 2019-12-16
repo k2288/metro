@@ -17,11 +17,13 @@ class Explorer extends Component{
             <Aux>
                 <div className="row" style={{margin:"0 10px"}}>
                     <div className="col-md-6 col-xs-6">
-                        <input  style={{margin:"0" ,minHeight:"32px"}} className="form-control" type="search" placeholder="Search Quick ... &nbsp;"/>
+                        <input  
+                        style={{margin:"0" ,minHeight:"27px",height:"27px"}} 
+                        className="form-control" type="search" placeholder="جستجو ..."/>
                     </div>
                     <div className="col-md-18 col-xs-18">
-                        <ol className="breadcrumb" style={{margin:"0",border:"solid 1px black",padding:"7px"}}>
-                            <li><a href="#">لیست کاربران</a></li>
+                        <ol className="breadcrumb" style={{margin:"0",border:"solid 1px black",padding:"3px 10px",fontSize:"12px"}}>
+                            <li>مدیریت کاربران</li>
                             <li className="active">کاربران</li>
                         </ol>
                     </div>
@@ -48,7 +50,7 @@ class Explorer extends Component{
                     }
                      </div>
                 </div>
-                <div className="row" onContextMenuCapture={()=>this.props.onOpenContextMenu([
+                {/* <div className="row" onContextMenuCapture={()=>this.props.onOpenContextMenu([
                         {label:"کاربر جدید",callback:()=>{
                             this.props.onAddWindow({
                                 name:"کاربر جدید",
@@ -59,7 +61,7 @@ class Explorer extends Component{
                         }},
                     ])} style={{height:"inherit"}}>
                     
-                </div>
+                </div> */}
             </Aux>
                 
         )

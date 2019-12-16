@@ -28,7 +28,7 @@ export const createUser=(user,windowId)=>{
             .then(resp=>{
                 dispatch(saveUserSuccess());
                 dispatch(actions.closeWindow(windowId))
-                dispatch(actions.getUsers())
+                dispatch(actions.getUsers(0,10))
             })
             .catch(err=>{
                 // dispatch(actions.handlerError())

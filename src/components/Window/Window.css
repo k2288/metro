@@ -282,7 +282,7 @@ span#max {
 
 #tray {
     height: 100%;
-    width: 240px;
+    width: 100%;
     margin: 0;
     padding: 0;
     float: right;
@@ -326,3 +326,12 @@ span#max {
     border-left: 1px solid rgba(0,0,0,.2);
     border-bottom: none;
 }
+
+.table thead tr th:last-child{
+    border-left: none;
+  }
+
+  .table > thead > tr > td{
+      padding: 5px 12px !important;
+  }
+  

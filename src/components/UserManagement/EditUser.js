@@ -5,6 +5,7 @@ import InputMask from "react-input-mask"
 import Aux from "../../aux/Aux";
 import moment from 'jalali-moment';
 import Select from 'react-select';
+import "./EditUser.css"
 
 
 class EditUser extends Component{
@@ -56,7 +57,11 @@ class EditUser extends Component{
             delete user.password;
             this.props.onEditUser(user,this.props.windowId);
         }else{
-            this.props.onCreateUser(this.state.user,this.props.windowId)
+            let user={...this.state.user}
+            if(user.birthDate){
+                user.birthDate=moment.from(user.birthDate, 'fa', 'YYYY/MM/DD').format()
+            }
+            this.props.onCreateUser(user,this.props.windowId)
         }
     }
 
@@ -65,10 +70,13 @@ class EditUser extends Component{
         let user={...this.state.user};
         let target =event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
+        console.log(value)
         user[event.target.name]=value;
         this.setState({
             user:user
         })
+        console.log(user)
+        console.log(this.state.user)
 
     }
 
@@ -108,12 +116,12 @@ class EditUser extends Component{
                         null
                     }
                         <div className="col-md-24 col-xs-24">
-                            <ul className="nav nav-tabs" role="tablist" style={{overflowY:"initial"}}>
-                                <li role="presentation" className="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">عمومی</a></li>
-                                <li role="presentation"><a href="#state" aria-controls="state" role="tab" data-toggle="tab">وضعیت</a></li>
-                                <li role="presentation"><a href="#role" aria-controls="role" role="tab" data-toggle="tab">نقش</a></li>
+                            <ul className="nav nav-tabs" role="tablist" style={{overflowY:"initial",marginBottom:"15px"}}>
+                                <li role="presentation"  className="active"><a style={{fontSize:"15px"}} href="#general" aria-controls="general" role="tab" data-toggle="tab">عمومی</a></li>
+                                <li role="presentation" ><a style={{fontSize:"15px"}} href="#state" aria-controls="state" role="tab" data-toggle="tab">وضعیت</a></li>
+                                <li role="presentation" ><a style={{fontSize:"15px"}} href="#role" aria-controls="role" role="tab" data-toggle="tab">نقش</a></li>
                                 
-                            </ul>
+                            </ul >
                             
                             
                             <div className="tab-content">
@@ -176,36 +184,21 @@ class EditUser extends Component{
                                     <div className="row">
                                         <div className="col-md-12 col-xs-12">
                                             <div className="form-group">
-                                                <p className="form-group-label">سطح کاربر </p>
-                                                <div className="radio">
-                                                    <label>
-                                                        <input type="radio" name="userLevel"  value="LOW" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="LOW"}/>
-                                                        <span>Low</span>
-                                                    </label>
-                                                </div>
-                                                <div className="radio">
-                                                    <label>
-                                                        <input type="radio" name="userLevel" value="MEDIUM" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="MEDIUM"}  />
-                                                        <span>MEDIUM</span>
-                                                    </label>
-                                                </div>
-                                                <div className="radio">
-                                                    <label>
-                                                        <input type="radio" name="userLevel" value="HIGH" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="HIGH"}  />
-                                                        <span>High</span>
-                                                    </label>
-                                                </div>
-                                                <div className="radio">
-                                                    <label>
-                                                        <input type="radio" name="userLevel" value="VERY_HIGH" onChange={this.inputChangeHandler} checked={this.state.user.userLevel==="VERY_HIGH"}  />
-                                                        <span>VERY_HIGH</span>
-                                                    </label>
+                                                <label htmlFor="user-level" className="form-group-label">سطح کاربر </label>
+                                                <div className="combobox">
+                                                    <select id="user-level" name="userLevel" className="form-control" onChange={this.inputChangeHandler} value={this.state.user.userLevel}>
+                                                        <option value="LOW">Low</option>
+                                                        <option value="MEDIUM" >MEDIUM</option>
+                                                        <option value="HIGH">HIGH</option>
+                                                        <option value="VERY_HIGH">VERY_HIGH</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
 
                                         </div>
                                         <div className="col-md-12 col-xs-12">
+
 
                                             <div className="checkbox">
                                                 <label>

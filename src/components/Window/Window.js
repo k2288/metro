@@ -198,7 +198,7 @@ class Window extends Component{
                 onMouseDown={this.windowCLick}
                 ref={this.window}
                 >
-                <div id="titlebar" ref={this.windowHeader}>
+                <div id="titlebar" ref={this.windowHeader} style={{backgroundColor:this.props.activeWindowId===this.props.win.uniqueId?"#298fcc":"white",color: this.props.activeWindowId===this.props.win.uniqueId?"white":"black",marginBottom:"10px"}}>
                     <span style={{float: "left"}}>{this.props.win.name}</span>
                     <span id="close" className="max-min-close" onClick={()=>this.props.onCloseWindow(this.props.win.uniqueId)}>
                     <span className="glyph glyph-cancel" style={{padding: "0 0px 20px",fontSize: "15px"}} ></span>
@@ -218,7 +218,8 @@ class Window extends Component{
 const mapStateToProps=state=>{
     return {
         windows:state.desktop.windows,
-        lastZIndex:state.desktop.lastZIndex
+        lastZIndex:state.desktop.lastZIndex,
+        activeWindowId:state.desktop.activeWindowId
     }
 }
 

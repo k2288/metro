@@ -1,0 +1,4 @@
+.nav-tabs>li.active>a {
+    color: #000;
+    font-size: 15px;
+}
