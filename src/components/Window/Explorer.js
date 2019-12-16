@@ -24,7 +24,7 @@ class Explorer extends Component{
                     <div className="col-md-18 col-xs-18">
                         <ol className="breadcrumb" style={{margin:"0",border:"solid 1px black",padding:"3px 10px",fontSize:"12px"}}>
                             <li>مدیریت کاربران</li>
-                            <li className="active">کاربران</li>
+                            <li>کاربران</li>
                         </ol>
                     </div>
                 </div>
