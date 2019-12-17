@@ -1,10 +1,12 @@
 /* @import url('https://cdn.metroui.org.ua/v4/css/metro-all.min.css'); */
 @import url('https://cdn.metroui.org.ua/v4/css/metro-icons.min.css');
 
+
+@import url(/css/fontiran.css);
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family:IRANSans !important;
   /* background: url("assets/images/Windows-10-lock-screen.jpg") center center no-repeat; */
   /* background-size: cover; */
 }
