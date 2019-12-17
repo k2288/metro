@@ -70,6 +70,17 @@ const getDesktopSuccess=(folders)=>{
         folders:folders
     }
 }
+export const getDesktopFolder=(uuid)=>{
+    return dispatch=>{
+        axios.get("/api/folder/children/"+uuid+"/0/10")
+        .then(resp=>{
+            dispatch(getDesktopSuccess(resp.data))
+        })
+        .catch(err=>{
+
+        })
+    }
+}
 
 
 export const getRoot=()=>{
@@ -81,20 +92,33 @@ export const getRoot=()=>{
                 let desktopFolder= resp.data.filter(folder=>{
                     return folder.title=="Desktop"
                 });
-                console.log(resp.data)
-                console.log(desktopFolder)
-
-                axios.get("/api/folder/children/"+desktopFolder[0].uuid+"/0/10")
-                .then(resp=>{
-                    dispatch(getDesktopSuccess(resp.data))
-                })
-                .catch(err=>{
-
-                })
+                dispatch(getDesktopFolder(desktopFolder[0].uuid));
+                
             }
 
         }).catch(err=>{
 
         })
+    }
+}
+
+export const uploadFiles=(files,folderId)=>{
+    return dispatch=>{
+
+        files.forEach(file => {
+            let formData = new FormData();
+            formData.append("file", file);
+            axios.post('/api/document/upload?uuid='+folderId, formData, {
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                }
+            }).then(resp=>{
+                dispatch(getDesktopFolder(folderId))
+            }).catch(err=>{
+                console.log(err.response.data);
+            })
+
+
+        });
     }
 }

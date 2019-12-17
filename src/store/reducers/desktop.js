@@ -10,7 +10,8 @@ const initialState={
     rootFolders:[],
     desktopFolders:{
         contents:[]
-    }
+    },
+    desktopId:""
 }
 
 const reducer=(state=initialState,action)=>{
@@ -105,9 +106,13 @@ const reducer=(state=initialState,action)=>{
                 contextMenuItems:[]
             }
         case actionTypes.GET_ROOT_FOLDERS_SUCCESS:
+            let desktopFolder= action.rootFolders.filter(folder=>{
+                return folder.title=="Desktop"
+            });
             return {
                 ...state,
-                rootFolders:action.rootFolders
+                rootFolders:action.rootFolders,
+                desktopId:desktopFolder[0].uuid
             }
         case actionTypes.GET_DESKTOP_FOLDERS_SUCCESS:
             return {

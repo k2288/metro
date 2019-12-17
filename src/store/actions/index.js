@@ -20,7 +20,8 @@ export {
     maximize,
     closeContextMenu,
     openContextMenu,
-    getRoot
+    getRoot,
+    uploadFiles
 }
 from "./desktop"
 

@@ -29,12 +29,13 @@
     padding: 20px;
     flex-direction: column;
     align-items: flex-start;
+    align-content: baseline;
   }
   .folder-wrapper{
     display: flex;
     flex-flow: column;
     align-items: center;
-    padding: 10px 0 10px;
+    padding: 10px 10px 10px;
   }
 
   .folder-icon{
@@ -369,4 +370,10 @@
     bottom: 0;
     transform: rotate(45deg);
   }
-  
+  .dropzone{
+    position: absolute;
+    top: 0 ;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
